@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -17,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from voiceagent import ROOT
 from voiceagent.config import AGENT_NAME, agent_config, prompt_version
-from voiceagent.vapi import Vapi
+from voiceagent.vapi import Vapi, VapiError
 
 CONFIG = ROOT / "config" / "vapi.json"
 
@@ -42,7 +43,19 @@ def ensure_number(vapi: Vapi, name: str, assistant_id: str | None, area_code: st
     body = {"provider": "vapi", "name": name, "numberDesiredAreaCode": area_code}
     if assistant_id:
         body["assistantId"] = assistant_id
-    return vapi.post("/phone-number", body)
+    try:
+        return vapi.post("/phone-number", body)
+    except VapiError as e:
+        # Vapi suggests other area codes when the one asked for has no free numbers.
+        hint = re.search(r"Try one of ([\d, ]+)", str(e))
+        if not hint:
+            raise
+        for code in re.findall(r"\d{3}", hint.group(1)):
+            try:
+                return vapi.post("/phone-number", {**body, "numberDesiredAreaCode": code})
+            except VapiError:
+                continue
+        raise
 
 
 def main() -> None:
