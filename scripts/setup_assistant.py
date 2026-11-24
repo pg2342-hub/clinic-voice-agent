@@ -77,16 +77,17 @@ def main() -> None:
         }
     )
     if args.phones:
+        # Only ids go in the public config; the numbers themselves stay in Vapi.
         agent_line = ensure_number(vapi, "clinic-agent-line", assistant["id"], args.area_code)
-        caller_line = ensure_number(vapi, "test-caller-line", None, args.area_code)
-        cfg.update(
-            {
-                "agent_number_id": agent_line["id"],
-                "agent_number": agent_line.get("number"),
-                "caller_number_id": caller_line["id"],
-                "caller_number": caller_line.get("number"),
-            }
-        )
+        cfg["agent_number_id"] = agent_line["id"]
+        try:
+            caller_line = ensure_number(vapi, "test-caller-line", None, args.area_code)
+            cfg["caller_number_id"] = caller_line["id"]
+        except VapiError as e:
+            print(f"Could not set up the test-caller line: {e}")
+            print("Numbers on this Vapi account (name, last 4 digits, attached assistant):")
+            for n in vapi.get("/phone-number?limit=100"):
+                print(f"- {n.get('name')!r}, ...{str(n.get('number', ''))[-4:]}, assistant {n.get('assistantId')}")
     CONFIG.parent.mkdir(exist_ok=True)
     CONFIG.write_text(json.dumps(cfg, indent=2) + "\n")
     print(json.dumps(cfg, indent=2))

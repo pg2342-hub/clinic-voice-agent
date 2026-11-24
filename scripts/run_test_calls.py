@@ -62,11 +62,12 @@ def download(url: str, dest: Path) -> None:
 
 def run_case(vapi: Vapi, cfg: dict, case: dict, label: str) -> dict:
     after = datetime.now(UTC).isoformat()
+    agent_number = vapi.get(f"/phone-number/{cfg['agent_number_id']}")["number"]
     caller = vapi.post(
         "/call",
         {
             "phoneNumberId": cfg["caller_number_id"],
-            "customer": {"number": cfg["agent_number"]},
+            "customer": {"number": agent_number},
             "assistant": caller_config(case),
         },
     )
