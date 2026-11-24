@@ -76,6 +76,9 @@ def main() -> None:
             "worker_url": args.worker_url.rstrip("/"),
         }
     )
+    # The public key is meant for browsers; the page's "Talk to the agent" button uses it.
+    if os.environ.get("VAPI_PUBLIC_KEY"):
+        cfg["public_key"] = os.environ["VAPI_PUBLIC_KEY"]
     if args.phones:
         # Only ids go in the public config; the numbers themselves stay in Vapi.
         agent_line = ensure_number(vapi, "clinic-agent-line", assistant["id"], args.area_code)
