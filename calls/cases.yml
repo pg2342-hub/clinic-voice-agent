@@ -2,7 +2,7 @@
 # (scripts/sim_calls.py); real phone calls are added separately. Every caller is constructed.
 - id: new-patient-booking
   title: New patient books an evaluation
-  tests: Collecting a new patient's details by voice, slot rules, read-back, confirmation text
+  tests: Collecting a new patient's details one at a time, slot rules, read-back, confirmation text
   caller: |
     You are Jordan Price, 27, calling for the first time. You want a first psychiatric evaluation,
     in person at the Eastside clinic, a morning if possible. Date of birth February 14, 1999.
@@ -10,8 +10,8 @@
   expect: {booked: {visit_type: new_eval, modality: in_person, clinic: east}, text: true}
 
 - id: hard-name-video-followup
-  title: Established patient with a name speech recognition struggles with
-  tests: Matching on last name plus date of birth when the first name is misheard; video follow-up
+  title: Established patient with a hard-to-spell name
+  tests: Matching on last name plus date of birth, an existing appointment in the way; video follow-up
   caller: |
     You are Siobhan Nguyen (say it "shiv-AWN win"), date of birth March 4, 1991. You see Dr. Ramos.
     You want an extra medication follow-up by video, any afternoon next week. If asked to spell
@@ -19,8 +19,8 @@
   expect: {booked: {visit_type: med_followup, modality: virtual}, text: true}
 
 - id: reschedule-with-interruption
-  title: Caller cuts in during the read-back
-  tests: Stopping mid-sentence on an interruption, then reading back the new choice
+  title: Reschedule where the caller changes the day
+  tests: Dropping the offered times for a later day, then reading back the new choice
   caller: |
     You are Xavier Reyes, date of birth January 30, 1978. You need to move your follow-up with
     Daniel Cho to an afternoon. When the assistant starts reading back the first afternoon it offers,
@@ -29,7 +29,7 @@
   expect: {rescheduled: true, text: true}
 
 - id: cancel-dob-as-digits
-  title: Cancellation with the date of birth said as digits
+  title: Cancellation with the date of birth given as digits
   tests: Understanding "oh five, oh eight, sixty-nine", verifying, cancel read-back
   caller: |
     You are Tomas Lindqvist. Give your date of birth only as "oh five, oh eight, sixty-nine"

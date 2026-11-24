@@ -1,6 +1,6 @@
 {
   "label": "v2",
-  "passed": 9,
+  "passed": 10,
   "total": 10,
   "calls": [
     {
@@ -248,7 +248,7 @@
     },
     {
       "case": "reschedule-with-interruption",
-      "passed": false,
+      "passed": true,
       "checks": [
         {
           "name": "rescheduled",
@@ -272,8 +272,8 @@
         },
         {
           "name": "read back before changing anything",
-          "ok": false,
-          "why": "reschedule_appointment ran without a read-back of the slot first"
+          "ok": true,
+          "why": ""
         }
       ]
     },

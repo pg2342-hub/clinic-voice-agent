@@ -52,13 +52,19 @@ def weekday(d: str) -> int:
 
 
 def read_back_before_changes(call: dict) -> tuple[bool, str]:
-    """Before every book, reschedule or cancel, the agent's last turn read back the slot and asked."""
+    """Before every book, reschedule or cancel, the agent read back the slot, asked, and the caller said yes.
+
+    The read-back is the agent turn just before the caller's last answer, so a filler line such as
+    "One moment while I book that" between the yes and the tool call does not count against it.
+    """
     last_bot, last_user = "", ""
+    turn_bot = ""
     for m in call["messages"]:
         if m.get("role") == "bot":
-            last_bot = m.get("message", "")
+            turn_bot = m.get("message", "")
         elif m.get("role") == "user":
             last_user = m.get("message", "")
+            last_bot = turn_bot
         elif m.get("role") == "tool_calls":
             for name in tool_names(m):
                 if name not in CHANGE_TOOLS:

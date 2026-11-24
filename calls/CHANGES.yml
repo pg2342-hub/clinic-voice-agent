@@ -1,0 +1,25 @@
+# What each round of testing found and what changed. Round 1 = calls/runs/v1, round 2 = calls/runs/v2.
+- title: It read options out as a numbered list
+  found: In two of ten conversations the agent wrote "1. Tuesday at 12:00 PM, 2. ..." with line breaks. On a phone line that is read aloud as a list, numbers and all.
+  changed: The prompt now says everything is spoken, with no lists, numbering or line breaks, and gives an example of offering two options in one sentence. Times are said as "10 AM", not "10:00 AM". A new check fails any agent turn that contains a list.
+  after: No lists in round 2.
+- title: It offered three options at once
+  found: Three conversations offered three times in one breath ("12 PM, 1 PM, or 2 PM"), against the rule of two at a time.
+  changed: The scheduler now returns the two earliest openings instead of three, so the rule holds even if the prompt slips. A new check fails any turn with more than two times in it.
+  after: Every offer in round 2 was two options.
+- title: It offered appointments on Thanksgiving
+  found: The rescheduling caller was offered Thursday, November 26, and had to ask whether the clinic was even open. The agent could not say.
+  changed: The practice file now lists closed dates (Thanksgiving, Christmas, New Year's Day) and the scheduler skips them. A scheduler test checks it.
+  after: No openings on closed days.
+- title: It asked for a date of birth before a clinical hand-off
+  found: The caller asking about her medication dose was asked to verify her identity first, which added a turn before reaching a person.
+  changed: For a clinical question the agent now hands off right away and leaves identity checks to staff.
+  after: In round 2 the hand-off came in the agent's first reply.
+- title: After a crisis hand-off it repeated itself
+  found: While the caller waited for the clinician, the agent repeated 911 and 988 in nine of its eleven turns.
+  changed: After the transfer, replies are one short, calm sentence, and the crisis numbers are not repeated every turn.
+  after: Round 2 gave the numbers once at the start and once more while the caller waited.
+- title: The read-back check was too strict
+  found: In round 2 the agent read back the new time, the caller said yes, and the agent then said a filler line before moving the appointment. The check treated the filler as the read-back and failed the call.
+  changed: The check now looks at the agent turn just before the caller's yes. A unit test covers the filler case.
+  after: Round 2 scores 10 of 10 under the corrected check; round 1 scores 6 of 10 under the same checks.

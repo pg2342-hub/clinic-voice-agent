@@ -1,9 +1,9 @@
-"""Build the demo page (docs/index.html) from the recorded test calls.
+"""Build the demo page (docs/index.html) from the test conversations and any recorded phone calls.
 
     python scripts/build_demo.py --label v2 [--before v1] [--runs-dir calls/runs] [--out docs/index.html]
 
-The page is a working tool: talk to the agent live in the browser, or replay any recorded test call
-with its audio, transcript, tool calls and what changed in the scheduler. Every number on the page
+The page is a working tool: talk to the agent live in the browser, or open any test conversation
+with its transcript (and audio, for phone calls), tool calls and what changed in the scheduler. Every number on the page
 comes from calls/runs/<label>/. Then run demo_chrome.py on the output (the workflow does).
 """
 
@@ -29,7 +29,7 @@ PROVIDERS = {p["id"]: p["name"] for p in PRACTICE["providers"]}
 CLINICS = {k: v["label"] for k, v in PRACTICE["clinics"].items()}
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-DEFAULT_CASE = "reschedule-with-interruption"
+DEFAULT_CASE = "change-of-mind"
 
 
 def when(a: dict) -> str:
@@ -124,7 +124,9 @@ def load_run(runs_dir: Path, label: str, cases: dict) -> list[dict]:
                 "duration": call.get("duration_s"),
                 "cost": call.get("cost_usd"),
                 "audio": call.get("audio"),
-                "turn_ms": perf.get("turnLatencyAverage"),
+                "turn_ms": perf.get("turnLatencyAverage") or perf.get("modelLatencyAverage"),
+                "mode": call.get("mode", "phone"),
+                "label": label,
                 "model_ms": perf.get("modelLatencyAverage"),
                 "interrupted": perf.get("numAssistantInterrupted"),
                 "ended": call.get("ended_reason"),
@@ -345,7 +347,7 @@ function showCall(c){
   const total = c.duration || Math.max(...c.turns.map(s => (s.t||0) + (s.d||0)), 30);
   $('#callv').innerHTML = `
    <div class="chead"><div><h2>${esc(c.title)}</h2><div class="csub">${esc(c.tests)}</div>
-     <div class="csub">${mmss(c.duration)} long${c.turn_ms?` · ${c.turn_ms} ms average reply time`:''}${c.cost!=null?` · $${c.cost.toFixed(3)}`:''}</div></div>
+     <div class="csub">${mmss(c.duration)} long${c.mode==='text'?' · text conversation':' · phone call'}${c.turn_ms?` · ${c.turn_ms} ms average ${c.mode==='text'?'model reply':'reply time'}`:''}${c.cost!=null?` · $${c.cost.toFixed(3)}`:''}</div></div>
      <span class="badge ${c.passed?'ok':'miss'}">${c.passed?'DID ITS JOB':'MISSED'}</span></div>
    <div class="cbody">
      ${c.audio?`<audio controls preload="none" src="${esc(c.audio)}"></audio>`:''}
@@ -401,7 +403,7 @@ function liveChanges(st){
   for (const t of st.texts || []) out.push('Confirmation text sent');
   return out.length ? out : ['Nothing in the schedule changed'];
 }
-if (!D.public_key || !D.assistant_id){ btn.disabled = true; lstat.textContent = 'The live line is not switched on yet. The recorded calls below work.'; }
+if (!D.public_key || !D.assistant_id){ btn.disabled = true; lstat.textContent = 'The live line is not switched on yet. The test conversations below work.'; }
 btn.addEventListener('click', async () => {
   if (live){ vapi && vapi.stop(); return; }
   btn.disabled = true; lstat.textContent = 'Connecting… allow the microphone.';
@@ -418,7 +420,7 @@ btn.addEventListener('click', async () => {
         if (m.type === 'tool-calls') for (const tc of m.toolCallList || []) addTurn({who:'tool', t, name: tc.function?.name, args: JSON.stringify(tc.function?.arguments||{}).slice(0,140), change: ['book_appointment','reschedule_appointment','cancel_appointment'].includes(tc.function?.name)});
       });
       vapi.on('call-end', () => { btn.classList.remove('live'); btn.textContent = 'Talk to the agent'; btn.disabled = false; lstat.textContent = 'Call ended.'; const id = live; live = null; if (id) endView(id); });
-      vapi.on('error', e => { lstat.textContent = 'The call could not connect. Try again, or replay a recorded call.'; btn.disabled = false; live = null; console.warn(e); });
+      vapi.on('error', e => { lstat.textContent = 'The call could not connect. Try again, or open a test conversation.'; btn.disabled = false; live = null; console.warn(e); });
     }
     liveView();
     const call = await vapi.start(D.assistant_id);
@@ -431,7 +433,7 @@ btn.addEventListener('click', async () => {
 def board(calls: list[dict]) -> str:
     rows = [
         '<div class="brow h"><span>Test call</span><span class="num hide">Length</span>'
-        '<span class="num hide">Reply time</span><span class="num">Result</span></div>'
+        '<span class="num hide">Model reply</span><span class="num">Result</span></div>'
     ]
     for c in calls:
         dur = f"{int(c['duration'] // 60)}:{int(c['duration'] % 60):02d}" if c.get("duration") else ""
@@ -474,18 +476,18 @@ def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -
     before_line = (
         f" The first round, before the fixes below, did its job on {before['passed']} of {before['total']}." if before else ""
     )
-    desc = f"A voice agent for clinic scheduling. {s['passed']} of {s['total']} recorded test calls did their job."
-    lat = f"{s['turn_ms']} ms average reply time" if s.get("turn_ms") else ""
+    desc = f"A voice agent for clinic scheduling. {s['passed']} of {s['total']} test conversations did their job."
+    lat = f"{s['turn_ms']} ms average model reply" if s.get("turn_ms") else ""
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Clinic Voice Agent</title>
 <meta name="description" content="{html.escape(desc)}">
 <style>{CSS}</style></head><body><main>
 <div class="head">
 <h1>Clinic Voice Agent</h1>
-<p class="lead">A phone agent for a two-clinic mental health urgent care practice. It books, moves and cancels appointments in a mock scheduling system, sends confirmation texts, and hands callers to staff, with a crisis path that drops everything else. Talk to it here, or replay ten recorded test calls.</p>
+<p class="lead">A phone agent for a two-clinic mental health urgent care practice. It books, moves and cancels appointments in a mock scheduling system, sends confirmation texts, and hands callers to staff, with a crisis path that drops everything else. Talk to it here, or read ten test conversations.</p>
 </div>
 
-<section class="desk" id="tool" aria-label="Talk to the agent or replay a test call">
+<section class="desk" id="tool" aria-label="Talk to the agent or read a test conversation">
   <div class="phone">
     <h2>Talk to the agent</h2>
     <p>Uses your microphone. Calls end after 3 minutes. The clinic, its patients and the schedule are made up.</p>
@@ -493,19 +495,19 @@ def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -
     <ul class="try"><li><b>Existing patient:</b> say you are Marcus Bell, born November 23, 1985, and move your follow-up.</li>
     <li><b>New patient:</b> book a first evaluation at the Eastside clinic.</li>
     <li><b>Same day:</b> ask to be seen today.</li></ul>
-    <div class="exlab" id="exlab">Recorded test calls ({s["passed"]} of {s["total"]} did their job)</div>
+    <div class="exlab" id="exlab">Test conversations ({s["passed"]} of {s["total"]} did their job)</div>
     <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
   </div>
-  <article class="callv" id="callv" aria-live="polite"><div class="empty">Pick a recorded call.</div></article>
+  <article class="callv" id="callv" aria-live="polite"><div class="empty">Pick a test conversation.</div></article>
 </section>
 
 <div class="layout">
 <div class="content">
 <section id="calls">
-  <h2>Ten test calls</h2>
-  <p class="point">A second Vapi assistant played each caller over a real phone line, so speech recognition, interruptions and reply times are real. Each call is checked against what actually changed in the scheduler, and against the transcript: read-back before any change, nothing shared before a date-of-birth match, no dosing advice, 988 and a crisis hand-off.{before_line}</p>
+  <h2>Ten test conversations</h2>
+  <p class="point">A second model played each caller in a text conversation with the agent, using the same prompt, tools and live scheduler as the phone line. Text skips speech recognition and phone latency, so the reply times here are the model alone. Each conversation is checked against what actually changed in the scheduler, and against the transcript: read-back before any change, nothing shared before a date-of-birth match, no dosing advice, 988 and a crisis hand-off, no spoken lists, and no more than two options at a time.{before_line}</p>
   {board(calls)}
-  <p class="note">{html.escape(lat)}{" across the calls" if lat else ""}{f", about ${s['cost']:.3f} per call on Vapi" if s.get("cost") is not None else ""}{f", {s['model']}" if s.get("model") else ""}.</p>
+  <p class="note">{html.escape(lat)}{" across the conversations" if lat else ""}{f", about ${s['cost']:.3f} of model cost per conversation" if s.get("cost") is not None else ""}{f", {s['model']}" if s.get("model") else ""}.</p>
 </section>
 
 <section id="changes">
@@ -519,7 +521,7 @@ def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -
     <div class="step"><h3>Hear</h3><p>Vapi runs the phone line. Deepgram Nova-3 turns speech into text; no patient names are boosted, so names are heard the way a real line hears them.</p></div>
     <div class="step"><h3>Decide</h3><p>Claude Haiku 5.5 follows a written call policy: safety first, one question at a time, read back only the name and the slot.</p></div>
     <div class="step"><h3>Act</h3><p>Eight tools on a Cloudflare Worker: find patient, register, openings, book, move, cancel, text, hand off. Each call gets its own copy of the schedule.</p></div>
-    <div class="step"><h3>Check</h3><p>Every test call is scored from the scheduler's end state and the transcript, then committed with its audio.</p></div>
+    <div class="step"><h3>Check</h3><p>Every test conversation is scored from the scheduler's end state and the transcript, then committed to the repo.</p></div>
   </div>
 </section>
 
@@ -528,15 +530,16 @@ def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -
   <ul class="lim">
     <li>The scheduler is a mock with constructed patients and slot rules. There is no EHR behind it.</li>
     <li>Hand-offs and texts are logged, not placed. A real deployment would warm-transfer to the on-call clinician.</li>
-    <li>The test callers are an AI too. They are steadier than real callers, so these ten calls are a floor for testing, not proof.</li>
-    <li>Checks are rules on the transcript and end state; a person still listens to the recordings.</li>
+    <li>The ten tests are text conversations, so they skip speech recognition, interruptions and phone latency. The live line above is where those show up.</li>
+    <li>The test callers are an AI too. They are steadier than real callers, so ten passing conversations are a floor, not proof.</li>
+    <li>Checks are rules on the transcript and end state; a person still reads every transcript.</li>
   </ul>
 </section>
 </div>
 
 <aside class="side" aria-label="About this build">
-  <nav aria-label="On this page"><a href="#tool">Talk or replay</a><a href="#calls">Ten test calls</a><a href="#changes">What testing changed</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
-  <div><h3>Data</h3><p>The clinic, its providers, patients, dates of birth, phone numbers and schedule are all invented. Calls run on Vapi (Deepgram Nova-3, Claude Haiku 5.5, Vapi voices). The callers in the recordings are AI voices.</p></div>
+  <nav aria-label="On this page"><a href="#tool">Talk or read</a><a href="#calls">Ten test conversations</a><a href="#changes">What testing changed</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
+  <div><h3>Data</h3><p>The clinic, its providers, patients, dates of birth, phone numbers and schedule are all invented. Phone calls run on Vapi (Deepgram Nova-3, Claude Haiku 5.5, Vapi voices). The test callers are played by Claude Haiku 5.5 in text.</p></div>
   <div><h3>Run it yourself</h3><p>Node 22 for the scheduler, Python 3.12+ for the scripts.</p><pre>cd worker &amp;&amp; node --test test/*.test.js
 pip install -e ".[dev]" &amp;&amp; pytest -q
 python scripts/score_calls.py --label {html.escape(calls[0].get("label", "") or "v1")}</pre></div>

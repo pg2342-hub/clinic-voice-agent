@@ -149,3 +149,25 @@ def test_saturday_video_booking_must_be_on_a_saturday():
     ]
     assert score(CASES["change-of-mind"], {"messages": msgs, "state": state(appointments=[sat], texts=[1])})["passed"]
     assert not score(CASES["change-of-mind"], {"messages": msgs, "state": state(appointments=[tue], texts=[1])})["passed"]
+
+
+def test_a_filler_line_after_the_yes_does_not_hide_the_read_back():
+    call = {
+        "messages": [
+            bot("Jordan Price, Wednesday at 9 AM at Eastside. Is that right?"),
+            user("Yes."),
+            bot("One moment while I book that."),
+            tc("book_appointment"),
+        ],
+        "state": state(appointments=[NEW_EVAL], texts=[{"to": "x"}]),
+    }
+    assert score(CASES["new-patient-booking"], call)["passed"]
+
+
+def test_spoken_lists_and_three_options_are_misses():
+    call = {
+        "messages": [bot("I have:\n1. Monday at 9 AM\n2. Monday at 10 AM\n3. Tuesday at 11 AM")],
+        "state": state(),
+    }
+    failed = {c["name"] for c in score(CASES["same-day-request"], call)["checks"] if not c["ok"]}
+    assert {"spoke without lists or formatting", "offered at most two options at a time"} <= failed
