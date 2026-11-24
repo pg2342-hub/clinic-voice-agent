@@ -13,6 +13,9 @@ on:
 permissions:
   contents: write
 concurrency: deploy
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -50,5 +53,6 @@ jobs:
         run: |
           git config user.name "Pranav Gudise"
           git config user.email "273664482+pg2342-hub@users.noreply.github.com"
+          test -f config/vapi.json
           git add config/vapi.json
           git diff --cached --quiet || (git commit -m "Update the Vapi assistant config" && git push)

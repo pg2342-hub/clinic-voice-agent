@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from voiceagent import ROOT
 from voiceagent.config import caller_config, prompt_version
-from voiceagent.vapi import Vapi
+from voiceagent.vapi import USER_AGENT, Vapi
 
 KEEP = ("role", "message", "time", "endTime", "secondsFromStart", "duration", "toolCalls", "name", "result", "toolCallId")
 
@@ -50,13 +50,13 @@ def find_agent_leg(vapi: Vapi, cfg: dict, after: str, timeout: int = 120) -> dic
 
 
 def fetch_json(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=30) as r:
+    with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": USER_AGENT}), timeout=30) as r:
         return json.loads(r.read())
 
 
 def download(url: str, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
-    with urllib.request.urlopen(url, timeout=120) as r:
+    with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": USER_AGENT}), timeout=120) as r:
         dest.write_bytes(r.read())
 
 

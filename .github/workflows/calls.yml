@@ -13,6 +13,9 @@ on:
 permissions:
   contents: write
 concurrency: calls
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
 jobs:
   calls:
     runs-on: ubuntu-latest

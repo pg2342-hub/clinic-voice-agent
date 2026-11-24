@@ -11,6 +11,10 @@ import urllib.request
 BASE = "https://api.vapi.ai"
 
 
+# Vapi sits behind Cloudflare, which refuses the default Python-urllib agent (error 1010).
+USER_AGENT = "clinic-voice-agent/0.1"
+
+
 class VapiError(RuntimeError):
     pass
 
@@ -26,7 +30,11 @@ class Vapi:
             self.base + path,
             data=data,
             method=method,
-            headers={"Authorization": f"Bearer {self.key}", "Content-Type": "application/json"},
+            headers={
+                "Authorization": f"Bearer {self.key}",
+                "Content-Type": "application/json",
+                "User-Agent": USER_AGENT,
+            },
         )
         for attempt in range(4):
             try:
