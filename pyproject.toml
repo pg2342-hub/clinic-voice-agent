@@ -7,7 +7,7 @@ name = "clinic-voice-agent"
 version = "0.1.0"
 description = "A voice agent that books, reschedules and cancels clinic appointments by phone"
 requires-python = ">=3.12"
-dependencies = ["pyyaml>=6"]
+dependencies = ["pyyaml>=6", "anthropic>=0.70"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]
