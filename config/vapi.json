@@ -3,5 +3,6 @@
   "model": "claude-haiku-5-5",
   "prompt_version": "60b996ce",
   "worker_url": "https://clinic-voice-agent.pg2342.workers.dev",
-  "agent_number_id": "e48d3985-085e-4cb8-ad23-1d4e90a98c60"
+  "agent_number_id": "e48d3985-085e-4cb8-ad23-1d4e90a98c60",
+  "public_key": "c7be10ec-cf56-4c80-a656-3d78297f08cc"
 }
