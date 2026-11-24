@@ -1,0 +1,36 @@
+{
+  "_note": "Fictional practice. Every name, date of birth, phone number and appointment here is constructed.",
+  "name": "the clinic",
+  "timezone": "America/Los_Angeles",
+  "phone": "555-0140",
+  "clinics": {
+    "east": {"label": "Eastside clinic", "address": "1200 East Flamingo Road (fictional)"},
+    "west": {"label": "Westside clinic", "address": "8800 West Sahara Avenue (fictional)"}
+  },
+  "walk_in": "Both clinics take walk-ins for same-day psychiatric care every day, 8 AM to 8 PM. Virtual walk-ins run 8 AM to 8 PM too.",
+  "insurance_note": "The clinic accepts most major commercial plans and Medicaid. The front desk confirms coverage before the visit; the agent does not verify insurance.",
+  "providers": [
+    {"id": "p_ramos", "name": "Dr. Elena Ramos", "role": "psychiatrist", "clinics": ["east"], "visit_types": ["new_eval", "med_followup"]},
+    {"id": "p_cho", "name": "Daniel Cho, PMHNP", "role": "nurse practitioner", "clinics": ["west"], "visit_types": ["new_eval", "med_followup"]},
+    {"id": "p_hale", "name": "Maya Hale, LCSW", "role": "therapist", "clinics": ["east", "west"], "visit_types": ["therapy_intake"]}
+  ],
+  "visit_types": {
+    "new_eval": {"label": "new patient psychiatric evaluation", "minutes": 60, "modalities": ["in_person"], "new_patients_only": true, "hours": [9, 12], "days": [1, 2, 3, 4, 5], "min_days_out": 1},
+    "med_followup": {"label": "medication follow-up", "minutes": 20, "modalities": ["in_person", "virtual"], "existing_patients_only": true, "own_provider": true, "hours": [9, 17], "days": [1, 2, 3, 4, 5], "min_days_out": 1},
+    "therapy_intake": {"label": "therapy intake", "minutes": 50, "modalities": ["in_person", "virtual"], "hours": [10, 18], "days": [1, 2, 3, 4, 5, 6], "virtual_only_days": [6], "min_days_out": 1}
+  },
+  "patients": [
+    {"id": "pt_101", "first": "Siobhan", "last": "Nguyen", "dob": "1991-03-04", "phone": "555-0101", "provider": "p_ramos", "clinic": "east"},
+    {"id": "pt_102", "first": "Marcus", "last": "Bell", "dob": "1985-11-23", "phone": "555-0102", "provider": "p_cho", "clinic": "west"},
+    {"id": "pt_103", "first": "Aaliyah", "last": "Okafor", "dob": "2001-07-16", "phone": "555-0103", "provider": "p_ramos", "clinic": "east"},
+    {"id": "pt_104", "first": "Xavier", "last": "Reyes", "dob": "1978-01-30", "phone": "555-0104", "provider": "p_cho", "clinic": "west"},
+    {"id": "pt_105", "first": "Priya", "last": "Raghunathan", "dob": "1996-09-12", "phone": "555-0105", "provider": "p_ramos", "clinic": "east"},
+    {"id": "pt_106", "first": "Tomas", "last": "Lindqvist", "dob": "1969-05-08", "phone": "555-0106", "provider": "p_cho", "clinic": "west"}
+  ],
+  "existing_appointments": [
+    {"patient": "pt_101", "visit_type": "med_followup", "days_out": 3, "hour": 10, "minute": 0, "modality": "in_person"},
+    {"patient": "pt_102", "visit_type": "med_followup", "days_out": 5, "hour": 14, "minute": 0, "modality": "virtual"},
+    {"patient": "pt_104", "visit_type": "med_followup", "days_out": 2, "hour": 11, "minute": 0, "modality": "in_person"},
+    {"patient": "pt_106", "visit_type": "med_followup", "days_out": 6, "hour": 16, "minute": 0, "modality": "in_person"}
+  ]
+}

@@ -1,0 +1,52 @@
+name: Deploy the agent
+# Deploys the scheduler Worker to Cloudflare, then creates or updates the Vapi assistant to use it.
+on:
+  workflow_dispatch:
+    inputs:
+      phones:
+        description: "Also set up the agent line and the test-caller line"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths: ["worker/src/**", "clinic/**", "voiceagent/config.py"]
+permissions:
+  contents: write
+concurrency: deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Deploy the Worker
+        working-directory: worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npm ci || npm install
+          npx wrangler deploy 2>&1 | tee deploy.log
+          url=$(grep -o 'https://[a-z0-9.-]*\.workers\.dev' deploy.log | head -1)
+          test -n "$url"
+          echo "WORKER_URL=$url" >> "$GITHUB_ENV"
+          curl -fsS "$url/health"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Create or update the Vapi assistant
+        env:
+          VAPI_API_KEY: ${{ secrets.VAPI_API_KEY }}
+          TOOL_SECRET: ${{ secrets.TOOL_SECRET }}
+          VAPI_PUBLIC_KEY: ${{ secrets.VAPI_PUBLIC_KEY }}
+        run: |
+          python scripts/setup_assistant.py --worker-url "$WORKER_URL" ${{ inputs.phones && '--phones' || '' }} | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Commit config/vapi.json
+        run: |
+          git config user.name "Pranav Gudise"
+          git config user.email "273664482+pg2342-hub@users.noreply.github.com"
+          git add config/vapi.json
+          git diff --cached --quiet || (git commit -m "Update the Vapi assistant config" && git push)

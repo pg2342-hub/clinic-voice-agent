@@ -1,0 +1,37 @@
+name: Record test calls
+# Phones the agent with the scripted callers, scores each call, rebuilds the demo page and commits it.
+on:
+  workflow_dispatch:
+    inputs:
+      label:
+        description: "Run label, e.g. v1"
+        required: true
+      only:
+        description: "Comma-separated case ids (blank = all ten)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+concurrency: calls
+jobs:
+  calls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Place the test calls
+        env:
+          VAPI_API_KEY: ${{ secrets.VAPI_API_KEY }}
+        run: python scripts/run_test_calls.py --label "${{ inputs.label }}" --only "${{ inputs.only }}"
+      - name: Score them
+        run: python scripts/score_calls.py --label "${{ inputs.label }}" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Commit the calls
+        run: |
+          git config user.name "Pranav Gudise"
+          git config user.email "273664482+pg2342-hub@users.noreply.github.com"
+          git add calls docs
+          git diff --cached --quiet || (git commit -m "Record test calls (${{ inputs.label }})" && git push)

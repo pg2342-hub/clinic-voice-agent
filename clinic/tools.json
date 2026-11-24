@@ -1,0 +1,46 @@
+[
+  {"name": "find_patient", "description": "Verify a caller who says they are an existing patient. Matches on last name and date of birth. Returns their id, provider and upcoming appointments, or a no-match message.",
+   "parameters": {"type": "object", "properties": {
+     "last_name": {"type": "string", "description": "Last name as said or spelled by the caller"},
+     "date_of_birth": {"type": "string", "description": "YYYY-MM-DD"}},
+     "required": ["last_name", "date_of_birth"]}},
+  {"name": "register_new_patient", "description": "Start a record for a caller who is new to the clinic. Returns a patient id to book with.",
+   "parameters": {"type": "object", "properties": {
+     "first_name": {"type": "string"}, "last_name": {"type": "string"},
+     "date_of_birth": {"type": "string", "description": "YYYY-MM-DD"},
+     "phone": {"type": "string", "description": "Mobile number for the confirmation text"}},
+     "required": ["first_name", "last_name", "date_of_birth", "phone"]}},
+  {"name": "find_openings", "description": "Find up to three open slots for a verified or newly registered patient, earliest first.",
+   "parameters": {"type": "object", "properties": {
+     "visit_type": {"type": "string", "enum": ["new_eval", "med_followup", "therapy_intake"]},
+     "patient_id": {"type": "string"},
+     "modality": {"type": "string", "enum": ["in_person", "virtual"]},
+     "clinic": {"type": "string", "enum": ["east", "west", "any"]},
+     "earliest_date": {"type": "string", "description": "YYYY-MM-DD, optional"},
+     "part_of_day": {"type": "string", "enum": ["morning", "afternoon", "any"]}},
+     "required": ["visit_type", "patient_id"]}},
+  {"name": "book_appointment", "description": "Book a slot from find_openings. Only after the caller confirmed the read-back.",
+   "parameters": {"type": "object", "properties": {
+     "slot_id": {"type": "string"}, "patient_id": {"type": "string"},
+     "visit_type": {"type": "string", "enum": ["new_eval", "med_followup", "therapy_intake"]}},
+     "required": ["slot_id", "patient_id", "visit_type"]}},
+  {"name": "reschedule_appointment", "description": "Move a booked appointment to a new slot from find_openings. Only after the caller confirmed the read-back.",
+   "parameters": {"type": "object", "properties": {
+     "appointment_id": {"type": "string"}, "new_slot_id": {"type": "string"}, "patient_id": {"type": "string"}},
+     "required": ["appointment_id", "new_slot_id", "patient_id"]}},
+  {"name": "cancel_appointment", "description": "Cancel a booked appointment. Only after the caller confirmed the read-back.",
+   "parameters": {"type": "object", "properties": {
+     "appointment_id": {"type": "string"}, "patient_id": {"type": "string"}},
+     "required": ["appointment_id", "patient_id"]}},
+  {"name": "send_confirmation_text", "description": "Text the patient a confirmation of a booking, change or cancellation.",
+   "parameters": {"type": "object", "properties": {
+     "appointment_id": {"type": "string"}, "patient_id": {"type": "string"},
+     "phone": {"type": "string", "description": "Only if the caller gave a different mobile number"}},
+     "required": ["appointment_id", "patient_id"]}},
+  {"name": "transfer_to_staff", "description": "Hand the call to a person with a one-line summary. Use reason crisis for any risk of harm.",
+   "parameters": {"type": "object", "properties": {
+     "reason": {"type": "string", "enum": ["crisis", "clinical_question", "caller_request", "billing", "cannot_verify", "other"]},
+     "urgency": {"type": "string", "enum": ["immediate", "routine"]},
+     "summary": {"type": "string"}},
+     "required": ["reason", "summary"]}}
+]
