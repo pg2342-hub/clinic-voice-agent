@@ -1,12 +1,12 @@
-# Ten scripted test calls. A second Vapi assistant plays the caller over a real phone line,
-# so speech recognition, interruptions and latency are real. Every caller is constructed.
+# Ten scripted test calls. A second model plays each caller in a text conversation with the agent
+# (scripts/sim_calls.py); real phone calls are added separately. Every caller is constructed.
 - id: new-patient-booking
   title: New patient books an evaluation
   tests: Collecting a new patient's details by voice, slot rules, read-back, confirmation text
   caller: |
     You are Jordan Price, 27, calling for the first time. You want a first psychiatric evaluation,
     in person at the Eastside clinic, a morning if possible. Date of birth February 14, 1999.
-    Mobile 555-0199. Spell your last name P-R-I-C-E if asked. Take the first morning they offer.
+    Mobile 702-555-0199. Spell your last name P-R-I-C-E if asked. Take the first morning they offer.
   expect: {booked: {visit_type: new_eval, modality: in_person, clinic: east}, text: true}
 
 - id: hard-name-video-followup

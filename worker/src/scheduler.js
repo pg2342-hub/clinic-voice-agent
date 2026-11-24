@@ -102,6 +102,7 @@ export function allSlots(practice, today) {
   const slots = [];
   for (let n = 1; n <= SEARCH_DAYS; n++) {
     const date = addDays(today, n);
+    if ((practice.closed_dates || []).includes(date)) continue; // holidays: no booked visits
     const wd = weekday(date);
     for (const p of practice.providers) {
       for (const vt of p.visit_types) {
@@ -233,7 +234,7 @@ export const TOOLS = {
     if (part_of_day === "morning") slots = slots.filter((s) => s.hhmm < 1200);
     if (part_of_day === "afternoon") slots = slots.filter((s) => s.hhmm >= 1200);
     slots.sort((a, b) => (a.date + a.hhmm).localeCompare(b.date + b.hhmm));
-    const pick = slots.slice(0, 3);
+    const pick = slots.slice(0, 2); // a caller can hold two options in their head, not three
     if (!pick.length) return { ok: true, result: "No openings match. Offer a different day, time of day or clinic, or walk-in hours." };
     return {
       ok: true,

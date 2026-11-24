@@ -129,3 +129,12 @@ test("transfers are logged with reason and summary, and every call goes in the l
   assert.deepEqual(s.log.map((l) => l.tool), ["transfer_to_staff", "nope"]);
   assert.equal(s.log[1].ok, false);
 });
+
+test("offers at most two openings, and nothing on closed days", () => {
+  const s = fresh();
+  verify(s, "Nguyen", "1991-03-04");
+  const out = JSON.parse(call(s, "find_openings", { visit_type: "med_followup", patient_id: "pt_101" }).result);
+  assert.ok(out.length <= 2);
+  const days = new Set(allSlots(practice, s.today).map((x) => x.date));
+  assert.equal(days.has("2026-12-25"), false);
+});

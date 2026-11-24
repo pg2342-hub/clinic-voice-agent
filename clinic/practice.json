@@ -7,6 +7,7 @@
     "east": {"label": "Eastside clinic", "address": "1200 East Flamingo Road (fictional)"},
     "west": {"label": "Westside clinic", "address": "8800 West Sahara Avenue (fictional)"}
   },
+  "closed_dates": ["2026-11-26", "2026-12-25", "2027-01-01"],
   "walk_in": "Both clinics take walk-ins for same-day psychiatric care every day, 8 AM to 8 PM. Virtual walk-ins run 8 AM to 8 PM too.",
   "insurance_note": "The clinic accepts most major commercial plans and Medicaid. The front desk confirms coverage before the visit; the agent does not verify insurance.",
   "providers": [

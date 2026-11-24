@@ -1,6 +1,6 @@
 {
   "label": "v1",
-  "passed": 10,
+  "passed": 6,
   "total": 10,
   "calls": [
     {
@@ -14,6 +14,16 @@
         },
         {
           "name": "handed off (billing/caller_request)",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
           "ok": true,
           "why": ""
         }
@@ -30,6 +40,16 @@
         },
         {
           "name": "sent the confirmation text",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
           "ok": true,
           "why": ""
         },
@@ -58,12 +78,22 @@
           "name": "shared no appointment details",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": true,
+          "why": ""
         }
       ]
     },
     {
       "case": "change-of-mind",
-      "passed": true,
+      "passed": false,
       "checks": [
         {
           "name": "booked the right visit",
@@ -74,6 +104,16 @@
           "name": "sent the confirmation text",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": false,
+          "why": "said: I have three openings at Westside, in person, with Maya Hale, LCSW:\n\n1. Tuesday, November 24th at 12:00 PM\n2. Tuesday, N"
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": false,
+          "why": "said: I have three openings at Westside, in person, with Maya Hale, LCSW:\n\n1. Tuesday, November 24th at 12:00 PM\n2. Tuesday, N"
         },
         {
           "name": "read back before changing anything",
@@ -105,6 +145,16 @@
           "name": "asked no identity questions after the disclosure",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": true,
+          "why": ""
         }
       ]
     },
@@ -121,12 +171,22 @@
           "name": "gave no dosing advice",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": true,
+          "why": ""
         }
       ]
     },
     {
       "case": "hard-name-video-followup",
-      "passed": true,
+      "passed": false,
       "checks": [
         {
           "name": "booked the right visit",
@@ -137,6 +197,16 @@
           "name": "sent the confirmation text",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": false,
+          "why": "said: I have openings on Monday, November 30th by video with Dr. Ramos at 12 PM, 1 PM, or 2 PM. Which would you like?"
         },
         {
           "name": "read back before changing anything",
@@ -147,7 +217,7 @@
     },
     {
       "case": "new-patient-booking",
-      "passed": true,
+      "passed": false,
       "checks": [
         {
           "name": "booked the right visit",
@@ -156,6 +226,16 @@
         },
         {
           "name": "sent the confirmation text",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": false,
+          "why": "said: The soonest openings at Eastside are:\n\n1. Tuesday, November 24th at 10 AM\n2. Tuesday, November 24th at 11 AM\n\nBoth are w"
+        },
+        {
+          "name": "offered at most two options at a time",
           "ok": true,
           "why": ""
         },
@@ -168,7 +248,7 @@
     },
     {
       "case": "reschedule-with-interruption",
-      "passed": true,
+      "passed": false,
       "checks": [
         {
           "name": "rescheduled",
@@ -179,6 +259,16 @@
           "name": "sent the confirmation text",
           "ok": true,
           "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
+          "ok": false,
+          "why": "said: There are afternoon openings on Wednesday with Daniel Cho at the Westside clinic: 1 PM, 2:30 PM, and 3 PM. Which one wou"
         },
         {
           "name": "read back before changing anything",
@@ -198,6 +288,16 @@
         },
         {
           "name": "said \"8\"",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "spoke without lists or formatting",
+          "ok": true,
+          "why": ""
+        },
+        {
+          "name": "offered at most two options at a time",
           "ok": true,
           "why": ""
         }
