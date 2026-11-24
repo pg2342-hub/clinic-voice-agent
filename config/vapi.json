@@ -1,0 +1,7 @@
+{
+  "assistant_id": "06cee63f-3fc9-4cdf-8bea-3ba5f2913aae",
+  "model": "claude-haiku-5-5",
+  "prompt_version": "60b996ce",
+  "worker_url": "https://clinic-voice-agent.pg2342.workers.dev",
+  "agent_number_id": "e48d3985-085e-4cb8-ad23-1d4e90a98c60"
+}
