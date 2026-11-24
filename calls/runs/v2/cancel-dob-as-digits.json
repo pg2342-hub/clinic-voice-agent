@@ -1,0 +1,248 @@
+{
+  "case": "cancel-dob-as-digits",
+  "label": "v2",
+  "mode": "text",
+  "prompt_version": "c93ecc95",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v2-cancel-dob-as-digits-baae97",
+  "started_at": "2026-11-24T06:49:21.448274+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 86.2,
+  "cost_usd": 0.0036,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, my name is Tomas Lindqvist. I need to cancel my upcoming appointment, please.",
+      "secondsFromStart": 6.55,
+      "duration": 5384
+    },
+    {
+      "role": "bot",
+      "message": "I can help with that, Tomas. First I need to verify your identity. What is your date of birth, month, day and year?",
+      "secondsFromStart": 12.88,
+      "duration": 8846
+    },
+    {
+      "role": "user",
+      "message": "My date of birth is oh five, oh eight, sixty-nine.",
+      "secondsFromStart": 22.13,
+      "duration": 3846
+    },
+    {
+      "role": "bot",
+      "message": "Thanks. That gives me May 8th, 1969. Could you also confirm your last name spelled out?",
+      "secondsFromStart": 26.92,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "L-I-N-D-Q-V-I-S-T.",
+      "secondsFromStart": 33.47,
+      "duration": 800
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 35.26,
+      "toolCalls": [
+        {
+          "id": "toolu_01LYM4b2DqYb1mEuLp78ktCv",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Lindqvist\", \"date_of_birth\": \"1969-05-08\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 35.26,
+      "name": "find_patient",
+      "result": "{\"patient_id\":\"pt_106\",\"first_name\":\"Tomas\",\"last_name\":\"Lindqvist\",\"provider\":\"Daniel Cho, PMHNP\",\"upcoming\":[{\"appointment_id\":\"appt_4\",\"what\":\"medication follow-up on Monday, November 30 at 4:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]}"
+    },
+    {
+      "role": "bot",
+      "message": "I found your appointment: a medication follow-up on Monday, November 30th at 4 PM with Daniel Cho at the Westside clinic. Is that the one you want to cancel?",
+      "secondsFromStart": 35.86,
+      "duration": 11153
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's the one. I'm travelling that week, so I need to cancel it.",
+      "secondsFromStart": 47.42,
+      "duration": 5384
+    },
+    {
+      "role": "bot",
+      "message": "Understood. To confirm: cancel your medication follow-up with Daniel Cho on Monday, November 30th at 4 PM. Is that right?",
+      "secondsFromStart": 53.83,
+      "duration": 7692
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's right. Please go ahead and cancel it.",
+      "secondsFromStart": 61.92,
+      "duration": 3461
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 66.42,
+      "toolCalls": [
+        {
+          "id": "toolu_01SfXBmLY5U1nr3QFFWMK5kc",
+          "function": {
+            "name": "cancel_appointment",
+            "arguments": "{\"appointment_id\": \"appt_4\", \"patient_id\": \"pt_106\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 66.42,
+      "name": "cancel_appointment",
+      "result": "{\"cancelled\":\"medication follow-up on Monday, November 30 at 4:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}"
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 67.07,
+      "toolCalls": [
+        {
+          "id": "toolu_011uRbx7K3SpyLTgbug53zAQ",
+          "function": {
+            "name": "send_confirmation_text",
+            "arguments": "{\"appointment_id\": \"appt_4\", \"patient_id\": \"pt_106\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 67.07,
+      "name": "send_confirmation_text",
+      "result": "Text sent to the number ending 0106."
+    },
+    {
+      "role": "bot",
+      "message": "Your appointment on Monday, November 30th has been cancelled, and a confirmation text is on its way to your phone. Is there anything else I can help you with?",
+      "secondsFromStart": 67.56,
+      "duration": 11153
+    },
+    {
+      "role": "user",
+      "message": "No, that's all I needed. Thank you.",
+      "secondsFromStart": 79.12,
+      "duration": 2692
+    },
+    {
+      "role": "bot",
+      "message": "You're welcome, Tomas. Safe travels, and take care.",
+      "secondsFromStart": 82.71,
+      "duration": 3076
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 576
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "cancelled"
+      }
+    ],
+    "verified": [
+      "pt_106"
+    ],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Lindqvist",
+          "date_of_birth": "1969-05-08"
+        },
+        "ok": true,
+        "result": "{\"patient_id\":\"pt_106\",\"first_name\":\"Tomas\",\"last_name\":\"Lindqvist\",\"provider\":\"Daniel Cho, PMHNP\",\"upcoming\":[{\"appointment_id\":\"appt_4\",\"what\":\"medication follow-up on Monday, November 30 at 4:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]}",
+        "at": "2026-11-24T06:49:16.155Z"
+      },
+      {
+        "tool": "cancel_appointment",
+        "args": {
+          "appointment_id": "appt_4",
+          "patient_id": "pt_106"
+        },
+        "ok": true,
+        "result": "{\"cancelled\":\"medication follow-up on Monday, November 30 at 4:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}",
+        "at": "2026-11-24T06:49:19.050Z"
+      },
+      {
+        "tool": "send_confirmation_text",
+        "args": {
+          "appointment_id": "appt_4",
+          "patient_id": "pt_106"
+        },
+        "ok": true,
+        "result": "Text sent to the number ending 0106.",
+        "at": "2026-11-24T06:49:19.765Z"
+      }
+    ],
+    "texts": [
+      {
+        "to": "555-0106",
+        "appointment_id": "appt_4",
+        "text": "Cancelled: medication follow-up on Monday, November 30 at 4:00 PM with Daniel Cho, PMHNP, at the Westside clinic."
+      }
+    ],
+    "transfers": [],
+    "next": 1,
+    "started": "2026-11-24T06:49:16.155Z"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "case": "asks-for-a-person",
+  "label": "v2",
+  "mode": "text",
+  "prompt_version": "c93ecc95",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v2-asks-for-a-person-43287a",
+  "started_at": "2026-11-24T06:49:54.804728+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 78.9,
+  "cost_usd": 0.0023,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Can I just talk to a person? It's about a bill.",
+      "secondsFromStart": 6.55,
+      "duration": 4230
+    },
+    {
+      "role": "bot",
+      "message": "I can connect you with a staff member for that. Let me transfer you now.",
+      "secondsFromStart": 12.09,
+      "duration": 5769
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 18.26,
+      "toolCalls": [
+        {
+          "id": "toolu_01XXyuMxp1iKyzgTBVbZojyo",
+          "function": {
+            "name": "transfer_to_staff",
+            "arguments": "{\"reason\": \"billing\", \"summary\": \"Caller has a question about a bill and asked to speak with a person.\", \"urgency\": \"routine\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 18.26,
+      "name": "transfer_to_staff",
+      "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up."
+    },
+    {
+      "role": "bot",
+      "message": "A staff member from the front desk will pick up shortly to help with your bill. Thank you for your patience.",
+      "secondsFromStart": 18.81,
+      "duration": 8076
+    },
+    {
+      "role": "user",
+      "message": "Okay, thank you. I'll hold.",
+      "secondsFromStart": 27.29,
+      "duration": 1923
+    },
+    {
+      "role": "bot",
+      "message": "Thank you for holding. A staff member will be with you shortly.",
+      "secondsFromStart": 30.06,
+      "duration": 4615
+    },
+    {
+      "role": "user",
+      "message": "Sure, I'll wait.",
+      "secondsFromStart": 35.08,
+      "duration": 1153
+    },
+    {
+      "role": "bot",
+      "message": "Thanks for waiting. A staff member will pick up soon.",
+      "secondsFromStart": 37.13,
+      "duration": 3846
+    },
+    {
+      "role": "user",
+      "message": "Okay. Is someone going to call me back, or am I still on hold?",
+      "secondsFromStart": 41.38,
+      "duration": 5384
+    },
+    {
+      "role": "bot",
+      "message": "You're still on the line, and I can't confirm exactly how long the wait will be. I've passed along that your question is about a bill. If you'd rather not hold, you can call back during clinic hours and ask for the front desk.",
+      "secondsFromStart": 48.0,
+      "duration": 16923
+    },
+    {
+      "role": "user",
+      "message": "Alright. Thanks for passing that along. I'll hold a little longer, and if nobody picks up I'll call back during clinic hours.",
+      "secondsFromStart": 65.33,
+      "duration": 8461
+    },
+    {
+      "role": "bot",
+      "message": "That sounds good. Thank you for calling, and take care.",
+      "secondsFromStart": 74.69,
+      "duration": 3846
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 626
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      }
+    ],
+    "verified": [],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "transfer_to_staff",
+        "args": {
+          "reason": "billing",
+          "summary": "Caller has a question about a bill and asked to speak with a person.",
+          "urgency": "routine"
+        },
+        "ok": true,
+        "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up.",
+        "at": "2026-11-24T06:49:49.807Z"
+      }
+    ],
+    "texts": [],
+    "transfers": [
+      {
+        "reason": "billing",
+        "urgency": "routine",
+        "summary": "Caller has a question about a bill and asked to speak with a person."
+      }
+    ],
+    "next": 1,
+    "started": "2026-11-24T06:49:49.807Z"
+  }
+}

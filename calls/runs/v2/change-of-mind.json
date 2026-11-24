@@ -1,0 +1,331 @@
+{
+  "case": "change-of-mind",
+  "label": "v2",
+  "mode": "text",
+  "prompt_version": "c93ecc95",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v2-change-of-mind-b383b8",
+  "started_at": "2026-11-24T06:49:32.769420+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 114.6,
+  "cost_usd": 0.0051,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, good morning. My name is Priya Raghunathan, and I'm an existing patient. I'd like to book a therapy intake appointment, preferably in person at the Westside clinic on a weekday.",
+      "secondsFromStart": 6.55,
+      "duration": 11923
+    },
+    {
+      "role": "bot",
+      "message": "Good morning, Priya. To verify your identity, could you please spell your last name and give me your date of birth, month, day and year?",
+      "secondsFromStart": 19.44,
+      "duration": 9615
+    },
+    {
+      "role": "user",
+      "message": "Sure. My last name is R-A-G-H-U-N-A-T-H-A-N. My date of birth is September 12, 1996.",
+      "secondsFromStart": 29.45,
+      "duration": 5384
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 35.83,
+      "toolCalls": [
+        {
+          "id": "toolu_01NTBjqiPk1E8Se1vGHYQWTQ",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Raghunathan\", \"date_of_birth\": \"1996-09-12\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 35.83,
+      "name": "find_patient",
+      "result": "{\"patient_id\":\"pt_105\",\"first_name\":\"Priya\",\"last_name\":\"Raghunathan\",\"provider\":\"Dr. Elena Ramos\",\"upcoming\":[]}"
+    },
+    {
+      "role": "bot",
+      "message": "Thank you, Priya, you're verified. Let me look for in-person therapy intake openings at the Westside clinic.",
+      "secondsFromStart": 36.77,
+      "duration": 6538
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 43.71,
+      "toolCalls": [
+        {
+          "id": "toolu_01XKm4LjVK7MsN3aBZpi3FQV",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"therapy_intake\", \"patient_id\": \"pt_105\", \"clinic\": \"west\", \"modality\": \"in_person\", \"part_of_day\": \"any\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 43.71,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_hale-2026-11-24-1200:in_person\",\"when\":\"Tuesday, November 24 at 12:00 PM with Maya Hale, LCSW, at the Westside clinic\"},{\"slot_id\":\"p_hale-2026-11-24-1700:in_person\",\"when\":\"Tuesday, November 24 at 5:00 PM with Maya Hale, LCSW, at the Westside clinic\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "I have two openings at the Westside clinic with Maya Hale: Tuesday, November 24th at 12 PM, or Tuesday at 5 PM. Which would you prefer?",
+      "secondsFromStart": 44.3,
+      "duration": 10000
+    },
+    {
+      "role": "user",
+      "message": "Hmm, let me think. Actually, I just realised weekdays won't work for me. Do you have anything on a Saturday? I'd prefer a video visit instead of coming in person.",
+      "secondsFromStart": 54.7,
+      "duration": 11538
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 67.5,
+      "toolCalls": [
+        {
+          "id": "toolu_016Q4eq96mKCB38dPSgx7kGL",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"therapy_intake\", \"patient_id\": \"pt_105\", \"clinic\": \"any\", \"modality\": \"virtual\", \"part_of_day\": \"any\", \"earliest_date\": \"2026-11-28\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 67.5,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_hale-2026-11-28-1300:virtual\",\"when\":\"Saturday, November 28 at 1:00 PM with Maya Hale, LCSW, by video\"},{\"slot_id\":\"p_hale-2026-11-28-1600:virtual\",\"when\":\"Saturday, November 28 at 4:00 PM with Maya Hale, LCSW, by video\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "I have two Saturday video options with Maya Hale: Saturday, November 28th at 1 PM, or 4 PM. Which would you like?",
+      "secondsFromStart": 68.05,
+      "duration": 8461
+    },
+    {
+      "role": "user",
+      "message": "The first one, Saturday, November 28th at 1 PM, please.",
+      "secondsFromStart": 76.91,
+      "duration": 3846
+    },
+    {
+      "role": "bot",
+      "message": "Just to confirm: Priya Raghunathan, therapy intake by video with Maya Hale on Saturday, November 28th at 1 PM. Is that right?",
+      "secondsFromStart": 81.73,
+      "duration": 8461
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's right. Thank you so much.",
+      "secondsFromStart": 90.59,
+      "duration": 2692
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 94.35,
+      "toolCalls": [
+        {
+          "id": "toolu_01Y1VLPDiqH5uCRkjyo5pdiG",
+          "function": {
+            "name": "book_appointment",
+            "arguments": "{\"slot_id\": \"p_hale-2026-11-28-1300:virtual\", \"patient_id\": \"pt_105\", \"visit_type\": \"therapy_intake\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 94.35,
+      "name": "book_appointment",
+      "result": "{\"appointment_id\":\"appt_101\",\"booked\":\"therapy intake on Saturday, November 28 at 1:00 PM with Maya Hale, LCSW, by video\"}"
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 94.95,
+      "toolCalls": [
+        {
+          "id": "toolu_01RRpqRdnj7N8kpLEh5jHKHi",
+          "function": {
+            "name": "send_confirmation_text",
+            "arguments": "{\"appointment_id\": \"appt_101\", \"patient_id\": \"pt_105\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 94.95,
+      "name": "send_confirmation_text",
+      "result": "Text sent to the number ending 0105."
+    },
+    {
+      "role": "bot",
+      "message": "You're booked for a video therapy intake with Maya Hale on Saturday, November 28th at 1 PM, and a confirmation text is on its way. Is there anything else I can help you with?",
+      "secondsFromStart": 95.54,
+      "duration": 13076
+    },
+    {
+      "role": "user",
+      "message": "No, that's everything. Thank you, goodbye.",
+      "secondsFromStart": 109.02,
+      "duration": 2307
+    },
+    {
+      "role": "bot",
+      "message": "Goodbye, Priya, and take care.",
+      "secondsFromStart": 112.23,
+      "duration": 1923
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 639
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_101",
+        "patient": "pt_105",
+        "provider": "p_hale",
+        "visit_type": "therapy_intake",
+        "date": "2026-11-28",
+        "hhmm": 1300,
+        "clinic": null,
+        "modality": "virtual",
+        "status": "booked"
+      }
+    ],
+    "verified": [
+      "pt_105"
+    ],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Raghunathan",
+          "date_of_birth": "1996-09-12"
+        },
+        "ok": true,
+        "result": "{\"patient_id\":\"pt_105\",\"first_name\":\"Priya\",\"last_name\":\"Raghunathan\",\"provider\":\"Dr. Elena Ramos\",\"upcoming\":[]}",
+        "at": "2026-11-24T06:49:24.018Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "therapy_intake",
+          "patient_id": "pt_105",
+          "clinic": "west",
+          "modality": "in_person",
+          "part_of_day": "any"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_hale-2026-11-24-1200:in_person\",\"when\":\"Tuesday, November 24 at 12:00 PM with Maya Hale, LCSW, at the Westside clinic\"},{\"slot_id\":\"p_hale-2026-11-24-1700:in_person\",\"when\":\"Tuesday, November 24 at 5:00 PM with Maya Hale, LCSW, at the Westside clinic\"}]",
+        "at": "2026-11-24T06:49:25.065Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "therapy_intake",
+          "patient_id": "pt_105",
+          "clinic": "any",
+          "modality": "virtual",
+          "part_of_day": "any",
+          "earliest_date": "2026-11-28"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_hale-2026-11-28-1300:virtual\",\"when\":\"Saturday, November 28 at 1:00 PM with Maya Hale, LCSW, by video\"},{\"slot_id\":\"p_hale-2026-11-28-1600:virtual\",\"when\":\"Saturday, November 28 at 4:00 PM with Maya Hale, LCSW, by video\"}]",
+        "at": "2026-11-24T06:49:27.382Z"
+      },
+      {
+        "tool": "book_appointment",
+        "args": {
+          "slot_id": "p_hale-2026-11-28-1300:virtual",
+          "patient_id": "pt_105",
+          "visit_type": "therapy_intake"
+        },
+        "ok": true,
+        "result": "{\"appointment_id\":\"appt_101\",\"booked\":\"therapy intake on Saturday, November 28 at 1:00 PM with Maya Hale, LCSW, by video\"}",
+        "at": "2026-11-24T06:49:30.418Z"
+      },
+      {
+        "tool": "send_confirmation_text",
+        "args": {
+          "appointment_id": "appt_101",
+          "patient_id": "pt_105"
+        },
+        "ok": true,
+        "result": "Text sent to the number ending 0105.",
+        "at": "2026-11-24T06:49:31.091Z"
+      }
+    ],
+    "texts": [
+      {
+        "to": "555-0105",
+        "appointment_id": "appt_101",
+        "text": "Confirmed: therapy intake on Saturday, November 28 at 1:00 PM with Maya Hale, LCSW, by video. Reply C to change."
+      }
+    ],
+    "transfers": [],
+    "next": 2,
+    "started": "2026-11-24T06:49:24.018Z"
+  }
+}

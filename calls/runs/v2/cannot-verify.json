@@ -1,0 +1,229 @@
+{
+  "case": "cannot-verify",
+  "label": "v2",
+  "mode": "text",
+  "prompt_version": "c93ecc95",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v2-cannot-verify-1273ba",
+  "started_at": "2026-11-24T06:50:02.187952+00:00",
+  "ended_reason": "customer-ended-call",
+  "duration_s": 69.3,
+  "cost_usd": 0.0028,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, my name is Siobhan Nguyen. I'd like to find out when my next appointment is.",
+      "secondsFromStart": 6.55,
+      "duration": 6153
+    },
+    {
+      "role": "bot",
+      "message": "Thanks, Siobhan. To pull up your appointment, I need your date of birth. What is it, month, day and year?",
+      "secondsFromStart": 13.64,
+      "duration": 7692
+    },
+    {
+      "role": "user",
+      "message": "It's April 3, 1991.",
+      "secondsFromStart": 21.74,
+      "duration": 1538
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 24.29,
+      "toolCalls": [
+        {
+          "id": "toolu_01XkCPoKuntCZmpg2HyCuwn5",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Nguyen\", \"date_of_birth\": \"1991-04-03\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 24.29,
+      "name": "find_patient",
+      "result": "No patient on file matches that last name and date of birth. Do not say whether the name or the date was wrong. Ask the caller to spell the last name and repeat the date of birth; if it still does not match, they may be a new patient, or offer a staff member."
+    },
+    {
+      "role": "bot",
+      "message": "Thanks. Could you spell your last name for me, and repeat your date of birth?",
+      "secondsFromStart": 24.73,
+      "duration": 5769
+    },
+    {
+      "role": "user",
+      "message": "Sure, my last name is N-G-U-Y-E-N. And my date of birth is April 3, 1991.",
+      "secondsFromStart": 30.9,
+      "duration": 5769
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 37.64,
+      "toolCalls": [
+        {
+          "id": "toolu_01FDbpv7urNJ6UUPow7Pq89G",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Nguyen\", \"date_of_birth\": \"1991-04-03\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 37.64,
+      "name": "find_patient",
+      "result": "No patient on file matches that last name and date of birth. Do not say whether the name or the date was wrong. Ask the caller to spell the last name and repeat the date of birth; if it still does not match, they may be a new patient, or offer a staff member."
+    },
+    {
+      "role": "bot",
+      "message": "I'm sorry, I still can't find a record that matches. Are you possibly new to the clinic? If not, I can transfer you to our front desk.",
+      "secondsFromStart": 38.26,
+      "duration": 10384
+    },
+    {
+      "role": "user",
+      "message": "Hmm, I've been coming here for a while, so I'm surprised. Yes, please transfer me to the front desk.",
+      "secondsFromStart": 49.05,
+      "duration": 7307
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 57.67,
+      "toolCalls": [
+        {
+          "id": "toolu_01SVTxPNZctTt5tzz2MMRdBM",
+          "function": {
+            "name": "transfer_to_staff",
+            "arguments": "{\"reason\": \"cannot_verify\", \"summary\": \"Caller Siobhan Nguyen, DOB April 3, 1991, asking about next appointment; could not verify identity after two attempts. Says she has been a patient for a while. Needs front desk help.\", \"urgency\": \"routine\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 57.67,
+      "name": "transfer_to_staff",
+      "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up."
+    },
+    {
+      "role": "bot",
+      "message": "I'm transferring you to the front desk now. A staff member will pick up shortly and can help you find your appointment.",
+      "secondsFromStart": 58.15,
+      "duration": 8461
+    },
+    {
+      "role": "user",
+      "message": "Thank you, I appreciate it.",
+      "secondsFromStart": 67.01,
+      "duration": 1923
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 597
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      }
+    ],
+    "verified": [],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Nguyen",
+          "date_of_birth": "1991-04-03"
+        },
+        "ok": false,
+        "result": "No patient on file matches that last name and date of birth. Do not say whether the name or the date was wrong. Ask the caller to spell the last name and repeat the date of birth; if it still does not match, they may be a new patient, or offer a staff member.",
+        "at": "2026-11-24T06:49:57.315Z"
+      },
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Nguyen",
+          "date_of_birth": "1991-04-03"
+        },
+        "ok": false,
+        "result": "No patient on file matches that last name and date of birth. Do not say whether the name or the date was wrong. Ask the caller to spell the last name and repeat the date of birth; if it still does not match, they may be a new patient, or offer a staff member.",
+        "at": "2026-11-24T06:49:58.971Z"
+      },
+      {
+        "tool": "transfer_to_staff",
+        "args": {
+          "reason": "cannot_verify",
+          "summary": "Caller Siobhan Nguyen, DOB April 3, 1991, asking about next appointment; could not verify identity after two attempts. Says she has been a patient for a while. Needs front desk help.",
+          "urgency": "routine"
+        },
+        "ok": true,
+        "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up.",
+        "at": "2026-11-24T06:50:01.207Z"
+      }
+    ],
+    "texts": [],
+    "transfers": [
+      {
+        "reason": "cannot_verify",
+        "urgency": "routine",
+        "summary": "Caller Siobhan Nguyen, DOB April 3, 1991, asking about next appointment; could not verify identity after two attempts. Says she has been a patient for a while. Needs front desk help."
+      }
+    ],
+    "next": 1,
+    "started": "2026-11-24T06:49:57.315Z"
+  }
+}

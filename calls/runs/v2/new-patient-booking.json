@@ -1,0 +1,331 @@
+{
+  "case": "new-patient-booking",
+  "label": "v2",
+  "mode": "text",
+  "prompt_version": "c93ecc95",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v2-new-patient-booking-6cd32b",
+  "started_at": "2026-11-24T06:48:41.653345+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 126.6,
+  "cost_usd": 0.0052,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, um, yeah. I'm calling to set up an appointment. It's my first time, so I think I need an initial psychiatric evaluation. Can I do that in person at the Eastside location?",
+      "secondsFromStart": 6.55,
+      "duration": 12692
+    },
+    {
+      "role": "bot",
+      "message": "Yes, the new psychiatric evaluation is in person, on weekday mornings, and I can look at Eastside for you. First, I'll need your first and last name, your date of birth, and a mobile number for the confirmation text. Let's start with your first and last name.",
+      "secondsFromStart": 20.38,
+      "duration": 18076
+    },
+    {
+      "role": "user",
+      "message": "My name is Jordan Price. That's P-R-I-C-E.",
+      "secondsFromStart": 38.86,
+      "duration": 2692
+    },
+    {
+      "role": "bot",
+      "message": "Thanks, Jordan. What's your date of birth, month, day and year?",
+      "secondsFromStart": 42.45,
+      "duration": 4230
+    },
+    {
+      "role": "user",
+      "message": "February 14, 1999.",
+      "secondsFromStart": 47.08,
+      "duration": 1153
+    },
+    {
+      "role": "bot",
+      "message": "Thanks. What's the best mobile number for the confirmation text?",
+      "secondsFromStart": 49.08,
+      "duration": 3846
+    },
+    {
+      "role": "user",
+      "message": "It's 702-555-0199.",
+      "secondsFromStart": 53.33,
+      "duration": 800
+    },
+    {
+      "role": "bot",
+      "message": "Thanks, Jordan. I'm setting up your new patient record now.",
+      "secondsFromStart": 55.42,
+      "duration": 3846
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 59.66,
+      "toolCalls": [
+        {
+          "id": "toolu_011GvNzpE7zVXskzdQriZWCC",
+          "function": {
+            "name": "register_new_patient",
+            "arguments": "{\"first_name\": \"Jordan\", \"last_name\": \"Price\", \"date_of_birth\": \"1999-02-14\", \"phone\": \"702-555-0199\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 59.66,
+      "name": "register_new_patient",
+      "result": "{\"patient_id\":\"new_1\",\"status\":\"new patient record started\"}"
+    },
+    {
+      "role": "bot",
+      "message": "Your record is started. Do you have a preferred day or time, morning or afternoon, or should I just check the earliest openings at Eastside?",
+      "secondsFromStart": 60.32,
+      "duration": 9615
+    },
+    {
+      "role": "user",
+      "message": "Just check the earliest opening at Eastside. A morning is best for me, so whatever's soonest in the morning works.",
+      "secondsFromStart": 70.34,
+      "duration": 7692
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 79.2,
+      "toolCalls": [
+        {
+          "id": "toolu_01PRUFprEsvhkYvgpYWGn8yS",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"new_eval\", \"patient_id\": \"new_1\", \"clinic\": \"east\", \"part_of_day\": \"morning\", \"modality\": \"in_person\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 79.2,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_ramos-2026-11-24-1000:in_person\",\"when\":\"Tuesday, November 24 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"},{\"slot_id\":\"p_ramos-2026-11-24-1100:in_person\",\"when\":\"Tuesday, November 24 at 11:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "The soonest morning opening is Tuesday, November 24th at 10 AM with Dr. Ramos at Eastside. Or there's 11 AM the same day. Which would you like?",
+      "secondsFromStart": 79.89,
+      "duration": 10384
+    },
+    {
+      "role": "user",
+      "message": "The 10 AM on Tuesday, November 24th works. I'll take that one.",
+      "secondsFromStart": 90.67,
+      "duration": 4615
+    },
+    {
+      "role": "bot",
+      "message": "Just to confirm: Jordan Price, Tuesday, November 24th at 10 AM, in person at Eastside. Is that right?",
+      "secondsFromStart": 96.26,
+      "duration": 6923
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's right.",
+      "secondsFromStart": 103.59,
+      "duration": 1153
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 105.83,
+      "toolCalls": [
+        {
+          "id": "toolu_014QNa2u2E9Zpk25FZv2zT47",
+          "function": {
+            "name": "book_appointment",
+            "arguments": "{\"slot_id\": \"p_ramos-2026-11-24-1000:in_person\", \"patient_id\": \"new_1\", \"visit_type\": \"new_eval\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 105.83,
+      "name": "book_appointment",
+      "result": "{\"appointment_id\":\"appt_102\",\"booked\":\"new patient psychiatric evaluation on Tuesday, November 24 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}"
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 106.37,
+      "toolCalls": [
+        {
+          "id": "toolu_01Bk8ezqK9ppXNKZJi4K4NCs",
+          "function": {
+            "name": "send_confirmation_text",
+            "arguments": "{\"appointment_id\": \"appt_102\", \"patient_id\": \"new_1\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 106.37,
+      "name": "send_confirmation_text",
+      "result": "Text sent to the number ending 0199."
+    },
+    {
+      "role": "bot",
+      "message": "You're booked for Tuesday, November 24th at 10 AM at Eastside. A confirmation text is on its way to your phone. Is there anything else I can help with?",
+      "secondsFromStart": 106.9,
+      "duration": 11153
+    },
+    {
+      "role": "user",
+      "message": "No, that's all I needed. Thank you, have a good day.",
+      "secondsFromStart": 118.46,
+      "duration": 4230
+    },
+    {
+      "role": "bot",
+      "message": "You're welcome, Jordan. Have a good day.",
+      "secondsFromStart": 123.55,
+      "duration": 2692
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 624
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_102",
+        "patient": "new_1",
+        "provider": "p_ramos",
+        "visit_type": "new_eval",
+        "date": "2026-11-24",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      }
+    ],
+    "verified": [],
+    "new_patients": [
+      {
+        "id": "new_1",
+        "first": "Jordan",
+        "last": "Price",
+        "dob": "1999-02-14",
+        "phone": "702-555-0199",
+        "provider": null
+      }
+    ],
+    "log": [
+      {
+        "tool": "register_new_patient",
+        "args": {
+          "first_name": "Jordan",
+          "last_name": "Price",
+          "date_of_birth": "1999-02-14",
+          "phone": "702-555-0199"
+        },
+        "ok": true,
+        "result": "{\"patient_id\":\"new_1\",\"status\":\"new patient record started\"}",
+        "at": "2026-11-24T06:48:34.509Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "new_eval",
+          "patient_id": "new_1",
+          "clinic": "east",
+          "part_of_day": "morning",
+          "modality": "in_person"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_ramos-2026-11-24-1000:in_person\",\"when\":\"Tuesday, November 24 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"},{\"slot_id\":\"p_ramos-2026-11-24-1100:in_person\",\"when\":\"Tuesday, November 24 at 11:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}]",
+        "at": "2026-11-24T06:48:36.542Z"
+      },
+      {
+        "tool": "book_appointment",
+        "args": {
+          "slot_id": "p_ramos-2026-11-24-1000:in_person",
+          "patient_id": "new_1",
+          "visit_type": "new_eval"
+        },
+        "ok": true,
+        "result": "{\"appointment_id\":\"appt_102\",\"booked\":\"new patient psychiatric evaluation on Tuesday, November 24 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}",
+        "at": "2026-11-24T06:48:39.523Z"
+      },
+      {
+        "tool": "send_confirmation_text",
+        "args": {
+          "appointment_id": "appt_102",
+          "patient_id": "new_1"
+        },
+        "ok": true,
+        "result": "Text sent to the number ending 0199.",
+        "at": "2026-11-24T06:48:40.133Z"
+      }
+    ],
+    "texts": [
+      {
+        "to": "702-555-0199",
+        "appointment_id": "appt_102",
+        "text": "Confirmed: new patient psychiatric evaluation on Tuesday, November 24 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic. Reply C to change."
+      }
+    ],
+    "transfers": [],
+    "next": 3,
+    "started": "2026-11-24T06:48:34.509Z"
+  }
+}
