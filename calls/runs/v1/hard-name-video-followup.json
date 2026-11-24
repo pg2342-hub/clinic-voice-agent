@@ -1,0 +1,304 @@
+{
+  "case": "hard-name-video-followup",
+  "label": "v1",
+  "mode": "text",
+  "prompt_version": "60b996ce",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v1-hard-name-video-followup-73a20b",
+  "started_at": "2026-11-24T06:45:05.061024+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 122.3,
+  "cost_usd": 0.0047,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, um, yeah. I'd like to set up a follow-up appointment with Dr. Ramos, please. Ideally a video visit, sometime next week in the afternoon if you have anything.",
+      "secondsFromStart": 6.55,
+      "duration": 11153
+    },
+    {
+      "role": "bot",
+      "message": "I can help with that. First, can I get your last name?",
+      "secondsFromStart": 18.64,
+      "duration": 4615
+    },
+    {
+      "role": "user",
+      "message": "It's Nguyen. Siobhan Nguyen. That's shiv-AWN win.",
+      "secondsFromStart": 23.66,
+      "duration": 2692
+    },
+    {
+      "role": "bot",
+      "message": "Thank you, Siobhan. What is your date of birth? Please give me the month, day and year.",
+      "secondsFromStart": 27.29,
+      "duration": 6538
+    },
+    {
+      "role": "user",
+      "message": "March 4, 1991.",
+      "secondsFromStart": 34.23,
+      "duration": 1153
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 36.41,
+      "toolCalls": [
+        {
+          "id": "toolu_01PrbsaupceqTioi46cGxxLG",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Nguyen\", \"date_of_birth\": \"1991-03-04\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 36.41,
+      "name": "find_patient",
+      "result": "{\"patient_id\":\"pt_101\",\"first_name\":\"Siobhan\",\"last_name\":\"Nguyen\",\"provider\":\"Dr. Elena Ramos\",\"upcoming\":[{\"appointment_id\":\"appt_1\",\"what\":\"medication follow-up on Thursday, November 26 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}]}"
+    },
+    {
+      "role": "bot",
+      "message": "Thank you, you're verified. I see you already have a medication follow-up with Dr. Ramos this Thursday at 10 AM. Do you want to book an additional follow-up for next week, or move the existing one to a video visit next week in the afternoon?",
+      "secondsFromStart": 37.3,
+      "duration": 17307
+    },
+    {
+      "role": "user",
+      "message": "Oh, I didn't know about the Thursday one. I'd like an additional one, please. I want a separate follow-up next week in the afternoon, by video. Thursday can stay as it is.",
+      "secondsFromStart": 55.01,
+      "duration": 12307
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 68.61,
+      "toolCalls": [
+        {
+          "id": "toolu_01TU6Vcmm4ejxpXGzddobDhv",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"med_followup\", \"patient_id\": \"pt_101\", \"earliest_date\": \"2026-11-30\", \"modality\": \"virtual\", \"part_of_day\": \"afternoon\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 68.61,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_ramos-2026-11-30-1200:virtual\",\"when\":\"Monday, November 30 at 12:00 PM with Dr. Elena Ramos, by video\"},{\"slot_id\":\"p_ramos-2026-11-30-1300:virtual\",\"when\":\"Monday, November 30 at 1:00 PM with Dr. Elena Ramos, by video\"},{\"slot_id\":\"p_ramos-2026-11-30-1400:virtual\",\"when\":\"Monday, November 30 at 2:00 PM with Dr. Elena Ramos, by video\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "I have openings on Monday, November 30th by video with Dr. Ramos at 12 PM, 1 PM, or 2 PM. Which would you like?",
+      "secondsFromStart": 69.22,
+      "duration": 9230
+    },
+    {
+      "role": "user",
+      "message": "Let's go with the first one offered, so 12 PM on Monday, November 30th, by video, please.",
+      "secondsFromStart": 78.85,
+      "duration": 6538
+    },
+    {
+      "role": "bot",
+      "message": "Just to confirm: Siobhan Nguyen, Monday, November 30th at 12 PM, by video. Is that right?",
+      "secondsFromStart": 86.39,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's right. Thank you.",
+      "secondsFromStart": 92.94,
+      "duration": 1923
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 96.01,
+      "toolCalls": [
+        {
+          "id": "toolu_01FAGw8RMn2Bv8721L2RVJ9t",
+          "function": {
+            "name": "book_appointment",
+            "arguments": "{\"slot_id\": \"p_ramos-2026-11-30-1200:virtual\", \"patient_id\": \"pt_101\", \"visit_type\": \"med_followup\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 96.01,
+      "name": "book_appointment",
+      "result": "{\"appointment_id\":\"appt_101\",\"booked\":\"medication follow-up on Monday, November 30 at 12:00 PM with Dr. Elena Ramos, by video\"}"
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 96.65,
+      "toolCalls": [
+        {
+          "id": "toolu_01FCGqbVw4G8EgCE9q57SMqj",
+          "function": {
+            "name": "send_confirmation_text",
+            "arguments": "{\"appointment_id\": \"appt_101\", \"patient_id\": \"pt_101\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 96.65,
+      "name": "send_confirmation_text",
+      "result": "Text sent to the number ending 0101."
+    },
+    {
+      "role": "bot",
+      "message": "You're booked for a video medication follow-up with Dr. Ramos on Monday, November 30th at 12 PM, and your Thursday visit stays as it is. A confirmation text is on its way. Is there anything else I can help with?",
+      "secondsFromStart": 97.46,
+      "duration": 15384
+    },
+    {
+      "role": "user",
+      "message": "No, that's everything. Thank you so much for your help.",
+      "secondsFromStart": 113.24,
+      "duration": 3846
+    },
+    {
+      "role": "bot",
+      "message": "You're welcome, Siobhan. Take care, and have a good day.",
+      "secondsFromStart": 118.05,
+      "duration": 3846
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 678
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_101",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1200,
+        "clinic": "east",
+        "modality": "virtual",
+        "status": "booked"
+      }
+    ],
+    "verified": [
+      "pt_101"
+    ],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Nguyen",
+          "date_of_birth": "1991-03-04"
+        },
+        "ok": true,
+        "result": "{\"patient_id\":\"pt_101\",\"first_name\":\"Siobhan\",\"last_name\":\"Nguyen\",\"provider\":\"Dr. Elena Ramos\",\"upcoming\":[{\"appointment_id\":\"appt_1\",\"what\":\"medication follow-up on Thursday, November 26 at 10:00 AM with Dr. Elena Ramos, at the Eastside clinic\"}]}",
+        "at": "2026-11-24T06:44:56.255Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "med_followup",
+          "patient_id": "pt_101",
+          "earliest_date": "2026-11-30",
+          "modality": "virtual",
+          "part_of_day": "afternoon"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_ramos-2026-11-30-1200:virtual\",\"when\":\"Monday, November 30 at 12:00 PM with Dr. Elena Ramos, by video\"},{\"slot_id\":\"p_ramos-2026-11-30-1300:virtual\",\"when\":\"Monday, November 30 at 1:00 PM with Dr. Elena Ramos, by video\"},{\"slot_id\":\"p_ramos-2026-11-30-1400:virtual\",\"when\":\"Monday, November 30 at 2:00 PM with Dr. Elena Ramos, by video\"}]",
+        "at": "2026-11-24T06:44:58.881Z"
+      },
+      {
+        "tool": "book_appointment",
+        "args": {
+          "slot_id": "p_ramos-2026-11-30-1200:virtual",
+          "patient_id": "pt_101",
+          "visit_type": "med_followup"
+        },
+        "ok": true,
+        "result": "{\"appointment_id\":\"appt_101\",\"booked\":\"medication follow-up on Monday, November 30 at 12:00 PM with Dr. Elena Ramos, by video\"}",
+        "at": "2026-11-24T06:45:02.146Z"
+      },
+      {
+        "tool": "send_confirmation_text",
+        "args": {
+          "appointment_id": "appt_101",
+          "patient_id": "pt_101"
+        },
+        "ok": true,
+        "result": "Text sent to the number ending 0101.",
+        "at": "2026-11-24T06:45:02.886Z"
+      }
+    ],
+    "texts": [
+      {
+        "to": "555-0101",
+        "appointment_id": "appt_101",
+        "text": "Confirmed: medication follow-up on Monday, November 30 at 12:00 PM with Dr. Elena Ramos, by video. Reply C to change."
+      }
+    ],
+    "transfers": [],
+    "next": 2,
+    "started": "2026-11-24T06:44:56.255Z"
+  }
+}

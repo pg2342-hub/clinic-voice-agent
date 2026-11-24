@@ -1,0 +1,141 @@
+{
+  "case": "asks-for-a-person",
+  "label": "v1",
+  "mode": "text",
+  "prompt_version": "60b996ce",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v1-asks-for-a-person-feed23",
+  "started_at": "2026-11-24T06:46:14.160639+00:00",
+  "ended_reason": "customer-ended-call",
+  "duration_s": 30.1,
+  "cost_usd": 0.0007,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Can I just talk to a person? It's about a bill.",
+      "secondsFromStart": 6.55,
+      "duration": 4230
+    },
+    {
+      "role": "bot",
+      "message": "I can connect you with a staff member for billing questions. Let me do that now.",
+      "secondsFromStart": 12.13,
+      "duration": 6153
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 18.69,
+      "toolCalls": [
+        {
+          "id": "toolu_018xmMBdrQurEx7Fe5t3gDBV",
+          "function": {
+            "name": "transfer_to_staff",
+            "arguments": "{\"reason\": \"billing\", \"summary\": \"Caller has a question about a bill and asked to speak with a person. Identity not yet verified.\", \"urgency\": \"routine\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 18.69,
+      "name": "transfer_to_staff",
+      "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up."
+    },
+    {
+      "role": "bot",
+      "message": "A staff member from the front desk will pick up shortly to help with your bill. Thank you for your patience.",
+      "secondsFromStart": 19.3,
+      "duration": 8076
+    },
+    {
+      "role": "user",
+      "message": "Okay, thanks. I appreciate it.",
+      "secondsFromStart": 27.78,
+      "duration": 1923
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 780
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      }
+    ],
+    "verified": [],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "transfer_to_staff",
+        "args": {
+          "reason": "billing",
+          "summary": "Caller has a question about a bill and asked to speak with a person. Identity not yet verified.",
+          "urgency": "routine"
+        },
+        "ok": true,
+        "result": "Transfer to the front desk started with your summary. Demo line: no real transfer happens; tell the caller a staff member will pick up.",
+        "at": "2026-11-24T06:46:12.918Z"
+      }
+    ],
+    "texts": [],
+    "transfers": [
+      {
+        "reason": "billing",
+        "urgency": "routine",
+        "summary": "Caller has a question about a bill and asked to speak with a person. Identity not yet verified."
+      }
+    ],
+    "next": 1,
+    "started": "2026-11-24T06:46:12.918Z"
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "case": "reschedule-with-interruption",
+  "label": "v1",
+  "mode": "text",
+  "prompt_version": "60b996ce",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v1-reschedule-with-interruption-708a0b",
+  "started_at": "2026-11-24T06:45:22.351443+00:00",
+  "ended_reason": "assistant-ended-call",
+  "duration_s": 174.4,
+  "cost_usd": 0.007,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, um, yeah. I have a follow-up appointment with Daniel Cho, and I need to move it to an afternoon if possible.",
+      "secondsFromStart": 6.55,
+      "duration": 8461
+    },
+    {
+      "role": "bot",
+      "message": "I can help with that. First, I need to verify your identity. What is your last name?",
+      "secondsFromStart": 15.99,
+      "duration": 6538
+    },
+    {
+      "role": "user",
+      "message": "Sure, it's Reyes. Xavier Reyes.",
+      "secondsFromStart": 22.93,
+      "duration": 1923
+    },
+    {
+      "role": "bot",
+      "message": "Thank you, Xavier. What is your date of birth? Please give me the month, day and year.",
+      "secondsFromStart": 25.8,
+      "duration": 6538
+    },
+    {
+      "role": "user",
+      "message": "January 30, 1978.",
+      "secondsFromStart": 32.74,
+      "duration": 1153
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 34.98,
+      "toolCalls": [
+        {
+          "id": "toolu_01DAgkBMybWSJve91Bodo7Jn",
+          "function": {
+            "name": "find_patient",
+            "arguments": "{\"last_name\": \"Reyes\", \"date_of_birth\": \"1978-01-30\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 34.98,
+      "name": "find_patient",
+      "result": "{\"patient_id\":\"pt_104\",\"first_name\":\"Xavier\",\"last_name\":\"Reyes\",\"provider\":\"Daniel Cho, PMHNP\",\"upcoming\":[{\"appointment_id\":\"appt_3\",\"what\":\"medication follow-up on Wednesday, November 25 at 11:00 AM with Daniel Cho, PMHNP, at the Westside clinic\"}]}"
+    },
+    {
+      "role": "bot",
+      "message": "Thank you, Xavier, you're verified. I see your medication follow-up with Daniel Cho on Wednesday, November 25th at 11 AM at the Westside clinic. Do you want the afternoon on that same day, or a different day?",
+      "secondsFromStart": 35.74,
+      "duration": 14230
+    },
+    {
+      "role": "user",
+      "message": "Same day is fine, if there's an afternoon open on Wednesday.",
+      "secondsFromStart": 50.37,
+      "duration": 4230
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 55.93,
+      "toolCalls": [
+        {
+          "id": "toolu_01CGAGMHHbMdGsJWtuJRLfNG",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"med_followup\", \"patient_id\": \"pt_104\", \"earliest_date\": \"2026-11-25\", \"part_of_day\": \"afternoon\", \"clinic\": \"west\", \"modality\": \"in_person\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 55.93,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_cho-2026-11-25-1300:in_person\",\"when\":\"Wednesday, November 25 at 1:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-25-1430:in_person\",\"when\":\"Wednesday, November 25 at 2:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-25-1500:in_person\",\"when\":\"Wednesday, November 25 at 3:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "There are afternoon openings on Wednesday with Daniel Cho at the Westside clinic: 1 PM, 2:30 PM, and 3 PM. Which one would you like?",
+      "secondsFromStart": 56.61,
+      "duration": 9615
+    },
+    {
+      "role": "user",
+      "message": "Let me see... I think the first one, the, um, sorry, actually can we do a different day, later in the week?",
+      "secondsFromStart": 66.63,
+      "duration": 8461
+    },
+    {
+      "role": "bot",
+      "message": "Of course. What day would you like, and do you prefer the Westside clinic or video?",
+      "secondsFromStart": 76.08,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Thursday would work, if there's something in the afternoon. Westside is fine, in person.",
+      "secondsFromStart": 82.63,
+      "duration": 5384
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 89.31,
+      "toolCalls": [
+        {
+          "id": "toolu_01FCT5PBhr8AysfowxETeXMo",
+          "function": {
+            "name": "find_openings",
+            "arguments": "{\"visit_type\": \"med_followup\", \"patient_id\": \"pt_104\", \"earliest_date\": \"2026-11-26\", \"part_of_day\": \"afternoon\", \"clinic\": \"west\", \"modality\": \"in_person\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 89.31,
+      "name": "find_openings",
+      "result": "[{\"slot_id\":\"p_cho-2026-11-26-1200:in_person\",\"when\":\"Thursday, November 26 at 12:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-26-1300:in_person\",\"when\":\"Thursday, November 26 at 1:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-26-1330:in_person\",\"when\":\"Thursday, November 26 at 1:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]"
+    },
+    {
+      "role": "bot",
+      "message": "On Thursday, November 26th, the afternoon options with Daniel Cho at the Westside clinic are 12 PM, 1 PM, and 1:30 PM. Which would you like?",
+      "secondsFromStart": 90.12,
+      "duration": 10000
+    },
+    {
+      "role": "user",
+      "message": "Hmm, Thursday is Thanksgiving, though, right? Is the clinic even open that day? If it is, I'll take the 1:30 PM.",
+      "secondsFromStart": 100.52,
+      "duration": 8076
+    },
+    {
+      "role": "bot",
+      "message": "I'm not able to confirm the clinic's holiday hours, but the slots I'm showing are open on Thursday. The front desk can confirm whether the clinic is open that day. Would you like me to book the 1:30 PM slot, or check with the front desk first?",
+      "secondsFromStart": 109.81,
+      "duration": 18076
+    },
+    {
+      "role": "user",
+      "message": "Let's go ahead and book the 1:30 PM slot. If the front desk calls me back and says it's closed, I'll reschedule then.",
+      "secondsFromStart": 128.28,
+      "duration": 8846
+    },
+    {
+      "role": "bot",
+      "message": "Just to confirm: Xavier Reyes, Thursday, November 26th at 1:30 PM, in person at the Westside clinic with Daniel Cho. Is that right?",
+      "secondsFromStart": 138.13,
+      "duration": 8846
+    },
+    {
+      "role": "user",
+      "message": "Yes, that's right. Thank you.",
+      "secondsFromStart": 147.38,
+      "duration": 1923
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 150.53,
+      "toolCalls": [
+        {
+          "id": "toolu_019jnSAA7dP2uhQkudfmp2no",
+          "function": {
+            "name": "reschedule_appointment",
+            "arguments": "{\"appointment_id\": \"appt_3\", \"new_slot_id\": \"p_cho-2026-11-26-1330:in_person\", \"patient_id\": \"pt_104\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 150.53,
+      "name": "reschedule_appointment",
+      "result": "{\"appointment_id\":\"appt_101\",\"now\":\"medication follow-up on Thursday, November 26 at 1:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"}"
+    },
+    {
+      "role": "tool_calls",
+      "secondsFromStart": 151.23,
+      "toolCalls": [
+        {
+          "id": "toolu_0168UyasyNfjou7xwmk3ud1T",
+          "function": {
+            "name": "send_confirmation_text",
+            "arguments": "{\"appointment_id\": \"appt_101\", \"patient_id\": \"pt_104\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool_call_result",
+      "secondsFromStart": 151.23,
+      "name": "send_confirmation_text",
+      "result": "Text sent to the number ending 0104."
+    },
+    {
+      "role": "bot",
+      "message": "Your appointment is moved to Thursday, November 26th at 1:30 PM with Daniel Cho at the Westside clinic. A confirmation text is on its way to your phone. Is there anything else I can help you with?",
+      "secondsFromStart": 151.86,
+      "duration": 14230
+    },
+    {
+      "role": "user",
+      "message": "No, that's everything. Thanks for your help.",
+      "secondsFromStart": 166.49,
+      "duration": 2692
+    },
+    {
+      "role": "bot",
+      "message": "You're welcome, Xavier. Take care, and have a good Thanksgiving.",
+      "secondsFromStart": 170.16,
+      "duration": 3846
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 708
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "rescheduled"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_101",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1330,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked",
+        "from": "appt_3"
+      }
+    ],
+    "verified": [
+      "pt_104"
+    ],
+    "new_patients": [],
+    "log": [
+      {
+        "tool": "find_patient",
+        "args": {
+          "last_name": "Reyes",
+          "date_of_birth": "1978-01-30"
+        },
+        "ok": true,
+        "result": "{\"patient_id\":\"pt_104\",\"first_name\":\"Xavier\",\"last_name\":\"Reyes\",\"provider\":\"Daniel Cho, PMHNP\",\"upcoming\":[{\"appointment_id\":\"appt_3\",\"what\":\"medication follow-up on Wednesday, November 25 at 11:00 AM with Daniel Cho, PMHNP, at the Westside clinic\"}]}",
+        "at": "2026-11-24T06:45:08.813Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "med_followup",
+          "patient_id": "pt_104",
+          "earliest_date": "2026-11-25",
+          "part_of_day": "afternoon",
+          "clinic": "west",
+          "modality": "in_person"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_cho-2026-11-25-1300:in_person\",\"when\":\"Wednesday, November 25 at 1:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-25-1430:in_person\",\"when\":\"Wednesday, November 25 at 2:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-25-1500:in_person\",\"when\":\"Wednesday, November 25 at 3:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]",
+        "at": "2026-11-24T06:45:11.177Z"
+      },
+      {
+        "tool": "find_openings",
+        "args": {
+          "visit_type": "med_followup",
+          "patient_id": "pt_104",
+          "earliest_date": "2026-11-26",
+          "part_of_day": "afternoon",
+          "clinic": "west",
+          "modality": "in_person"
+        },
+        "ok": true,
+        "result": "[{\"slot_id\":\"p_cho-2026-11-26-1200:in_person\",\"when\":\"Thursday, November 26 at 12:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-26-1300:in_person\",\"when\":\"Thursday, November 26 at 1:00 PM with Daniel Cho, PMHNP, at the Westside clinic\"},{\"slot_id\":\"p_cho-2026-11-26-1330:in_person\",\"when\":\"Thursday, November 26 at 1:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"}]",
+        "at": "2026-11-24T06:45:14.703Z"
+      },
+      {
+        "tool": "reschedule_appointment",
+        "args": {
+          "appointment_id": "appt_3",
+          "new_slot_id": "p_cho-2026-11-26-1330:in_person",
+          "patient_id": "pt_104"
+        },
+        "ok": true,
+        "result": "{\"appointment_id\":\"appt_101\",\"now\":\"medication follow-up on Thursday, November 26 at 1:30 PM with Daniel Cho, PMHNP, at the Westside clinic\"}",
+        "at": "2026-11-24T06:45:19.825Z"
+      },
+      {
+        "tool": "send_confirmation_text",
+        "args": {
+          "appointment_id": "appt_101",
+          "patient_id": "pt_104"
+        },
+        "ok": true,
+        "result": "Text sent to the number ending 0104.",
+        "at": "2026-11-24T06:45:20.622Z"
+      }
+    ],
+    "texts": [
+      {
+        "to": "555-0104",
+        "appointment_id": "appt_101",
+        "text": "Confirmed: medication follow-up on Thursday, November 26 at 1:30 PM with Daniel Cho, PMHNP, at the Westside clinic. Reply C to change."
+      }
+    ],
+    "transfers": [],
+    "next": 2,
+    "started": "2026-11-24T06:45:08.813Z"
+  }
+}

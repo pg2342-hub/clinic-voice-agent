@@ -1,0 +1,110 @@
+{
+  "case": "same-day-request",
+  "label": "v1",
+  "mode": "text",
+  "prompt_version": "60b996ce",
+  "model": "claude-haiku-5-5",
+  "agent_call_id": "sim-v1-same-day-request-6df206",
+  "started_at": "2026-11-24T06:45:49.465333+00:00",
+  "ended_reason": "customer-ended-call",
+  "duration_s": 66.4,
+  "cost_usd": 0.0007,
+  "audio": null,
+  "messages": [
+    {
+      "role": "bot",
+      "message": "Thanks for calling the clinic. This is the virtual assistant. How can I help you today?",
+      "secondsFromStart": 0.0,
+      "duration": 6153
+    },
+    {
+      "role": "user",
+      "message": "Hi, um, my name is Dana Whitfield. I'm new to the clinic. I've been having panic attacks this week, and I was hoping I could see someone today, if that's possible.",
+      "secondsFromStart": 6.55,
+      "duration": 11923
+    },
+    {
+      "role": "bot",
+      "message": "Thanks for calling, Dana, and I'm glad you reached out. Today, we offer walk-in care at both clinics, in person or by video, from 8 AM to 8 PM. You can walk in any time during those hours, and nothing needs to be booked ahead.\n\nIf you'd like to schedule a first visit instead, I can help with that. To get started, can you spell your last name for me?",
+      "secondsFromStart": 19.92,
+      "duration": 26923
+    },
+    {
+      "role": "user",
+      "message": "Walk-in works for me, thanks. I'll come in today.",
+      "secondsFromStart": 47.25,
+      "duration": 3461
+    },
+    {
+      "role": "bot",
+      "message": "That's a good plan, Dana. You can walk in today any time between 8 AM and 8 PM at either clinic.\n\nIs there anything else I can help you with?",
+      "secondsFromStart": 51.77,
+      "duration": 11538
+    },
+    {
+      "role": "user",
+      "message": "No, that's everything. Thanks so much.",
+      "secondsFromStart": 63.71,
+      "duration": 2307
+    }
+  ],
+  "performance": {
+    "modelLatencyAverage": 855
+  },
+  "state": {
+    "today": "2026-11-23",
+    "appointments": [
+      {
+        "id": "appt_1",
+        "patient": "pt_101",
+        "provider": "p_ramos",
+        "visit_type": "med_followup",
+        "date": "2026-11-26",
+        "hhmm": 1000,
+        "clinic": "east",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_2",
+        "patient": "pt_102",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1400,
+        "clinic": "west",
+        "modality": "virtual",
+        "status": "booked"
+      },
+      {
+        "id": "appt_3",
+        "patient": "pt_104",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-25",
+        "hhmm": 1100,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      },
+      {
+        "id": "appt_4",
+        "patient": "pt_106",
+        "provider": "p_cho",
+        "visit_type": "med_followup",
+        "date": "2026-11-30",
+        "hhmm": 1600,
+        "clinic": "west",
+        "modality": "in_person",
+        "status": "booked"
+      }
+    ],
+    "verified": [],
+    "new_patients": [],
+    "log": [],
+    "texts": [],
+    "transfers": [],
+    "next": 1,
+    "started": "2026-11-24T06:45:49.611Z"
+  }
+}
