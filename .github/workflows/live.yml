@@ -1,0 +1,34 @@
+name: Save real calls
+# Saves the real calls people made to the agent (browser or phone), with their audio, and commits them.
+on:
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Only calls created after this ISO time (blank = all)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+concurrency: calls
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Fetch the calls
+        env:
+          VAPI_API_KEY: ${{ secrets.VAPI_API_KEY }}
+        run: python scripts/fetch_live_calls.py --since "${{ inputs.since }}" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Commit them
+        run: |
+          git config user.name "Pranav Gudise"
+          git config user.email "273664482+pg2342-hub@users.noreply.github.com"
+          git add calls docs
+          git diff --cached --quiet || (git commit -m "Save real calls" && git pull --rebase -q && git push)

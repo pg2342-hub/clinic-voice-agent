@@ -141,6 +141,36 @@ def load_run(runs_dir: Path, label: str, cases: dict) -> list[dict]:
     return calls
 
 
+def load_live(live_dir: Path) -> list[dict]:
+    """Real calls a person made to the agent (scripts/fetch_live_calls.py). No scripted case, so no checks."""
+    out = []
+    for path in sorted(live_dir.glob("*.json")):
+        call = json.loads(path.read_text())
+        perf = call.get("performance") or {}
+        how = "by phone" if "Phone" in (call.get("kind") or "") else "in the browser"
+        out.append(
+            {
+                "id": call["agent_call_id"],
+                "title": f"Real call {len(out) + 1}, {how}",
+                "tests": "Made by a person, so speech recognition, interruptions and timing are real. Not scored.",
+                "passed": None,
+                "checks": [],
+                "duration": call.get("duration_s"),
+                "cost": call.get("cost_usd"),
+                "audio": call.get("audio"),
+                "turn_ms": perf.get("turnLatencyAverage"),
+                "mode": "phone",
+                "turns": turns(call),
+                "changes": changes(call["state"]),
+                "started": call.get("started_at") or "",
+            }
+        )
+    out.sort(key=lambda c: c["started"])
+    for i, c in enumerate(out, 1):
+        c["title"] = c["title"].replace(c["title"].split(",")[0], f"Real call {i}")
+    return out
+
+
 def summary(calls: list[dict]) -> dict:
     lat = [c["turn_ms"] for c in calls if c.get("turn_ms")]
     cost = [c["cost"] for c in calls if c.get("cost") is not None]
@@ -255,11 +285,14 @@ CSS = r"""
 .try{margin:14px 0 0;padding:0;list-style:none;font-size:13.5px;color:var(--ink-2)}
 .try li{padding:3px 0}.try b{color:var(--ink);font-weight:500}
 .exlab{font:500 13px/1.3 var(--sans);margin:22px 0 8px}
+.callv .tx{max-width:none}
 .exlist{display:grid;gap:6px}
+.exlist + .exlab{margin-top:14px}
 .ex{display:grid;grid-template-columns:14px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;min-height:40px;padding:6px 12px;
  border:1px solid var(--rule);border-radius:12px;background:#fff;font:400 14px/1.3 var(--sans);text-align:left;cursor:pointer;color:var(--ink)}
 .ex i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink)}
 .ex i.pass{background:var(--green);border-color:var(--green)}
+.ex i.real{border-color:var(--green);border-radius:50%}
 .ex small{font:12px/1 var(--mono);color:var(--ink-2)}
 .ex[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .ex[aria-pressed=true] small{color:rgb(244 242 236/.7)}
@@ -273,6 +306,7 @@ CSS = r"""
 .badge.ok{background:var(--green-wash);color:var(--green)}
 .badge.miss{background:var(--ink);color:var(--paper)}
 .badge.live{border:1.5px dashed var(--ink)}
+.badge.real{border:1.5px solid var(--green);color:var(--green)}
 .cbody{padding:14px 26px 22px}
 .cbody audio{width:100%;margin:4px 0 8px}
 .tl{display:block;width:100%;height:auto;margin:6px 0 2px}
@@ -348,28 +382,30 @@ function showCall(c){
   $('#callv').innerHTML = `
    <div class="chead"><div><h2>${esc(c.title)}</h2><div class="csub">${esc(c.tests)}</div>
      <div class="csub">${mmss(c.duration)} long${c.mode==='text'?' · text conversation':' · phone call'}${c.turn_ms?` · ${c.turn_ms} ms average ${c.mode==='text'?'model reply':'reply time'}`:''}${c.cost!=null?` · $${c.cost.toFixed(3)}`:''}</div></div>
-     <span class="badge ${c.passed?'ok':'miss'}">${c.passed?'DID ITS JOB':'MISSED'}</span></div>
+     ${c.passed===null?'<span class="badge real">REAL CALL</span>':`<span class="badge ${c.passed?'ok':'miss'}">${c.passed?'DID ITS JOB':'MISSED'}</span>`}</div>
    <div class="cbody">
      ${c.audio?`<audio controls preload="none" src="${esc(c.audio)}"></audio>`:''}
      ${timeline(c.turns, total)}
      <div class="tlkey"><span><i class="k-agent"></i>Agent speaking</span><span><i class="k-caller"></i>Caller speaking</span><span><i class="k-change"></i>Schedule changed</span></div>
      <div class="tx">${c.turns.map(turnHTML).join('')}</div>
      <div class="out"><h3>What changed in the schedule</h3><ul>${c.changes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
-     <div class="out"><h3>Checks</h3><ul class="chk">${c.checks.map(k=>`<li><i class="${k.ok?'ok':''}"></i><span>${esc(k.name)}${k.ok?'':`<small>${esc(k.why)}</small>`}</span></li>`).join('')}</ul></div>
+     ${c.checks.length?'':'<!--'}<div class="out"><h3>Checks</h3><ul class="chk">${c.checks.map(k=>`<li><i class="${k.ok?'ok':''}"></i><span>${esc(k.name)}${k.ok?'':`<small>${esc(k.why)}</small>`}</span></li>`).join('')}</ul></div>${c.checks.length?'':'-->'}
    </div>`;
 }
 
 const list = $('#exlist');
-D.calls.forEach(c => {
+function addEx(c, into){
   const b = document.createElement('button');
   b.className = 'ex'; b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.dataset.id = c.id;
-  b.innerHTML = `<i class="${c.passed?'pass':''}"></i><span>${esc(c.title)}</span><small>${mmss(c.duration)}</small>`;
+  b.innerHTML = `<i class="${c.passed===null?'real':(c.passed?'pass':'')}"></i><span>${esc(c.title)}</span><small>${mmss(c.duration)}</small>`;
   b.addEventListener('click', () => pick(c.id, true));
-  list.appendChild(b);
-});
+  into.appendChild(b);
+}
+D.live.forEach(c => addEx(c, $('#livelist')));
+D.calls.forEach(c => addEx(c, list));
 function pick(id, scroll){
   document.querySelectorAll('.ex').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === id)));
-  const c = D.calls.find(x => x.id === id); if (c) showCall(c);
+  const c = D.calls.concat(D.live).find(x => x.id === id); if (c) showCall(c);
   if (scroll && window.innerWidth < 1000) $('#callv').scrollIntoView({behavior:'smooth', block:'start'});
 }
 pick(D.default, false);
@@ -463,10 +499,12 @@ def changes_section(path: Path) -> str:
     return "".join(out)
 
 
-def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -> str:
+def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str, live: list[dict] | None = None) -> str:
+    live = live or []
     s = summary(calls)
     data = {
         "calls": calls,
+        "live": live,
         "default": DEFAULT_CASE if any(c["id"] == DEFAULT_CASE for c in calls) else calls[0]["id"],
         "public_key": cfg.get("public_key"),
         "assistant_id": cfg.get("assistant_id"),
@@ -495,6 +533,7 @@ def page(calls: list[dict], cfg: dict, before: dict | None, changes_html: str) -
     <ul class="try"><li><b>Existing patient:</b> say you are Marcus Bell, born November 23, 1985, and move your follow-up.</li>
     <li><b>New patient:</b> book a first evaluation at the Eastside clinic.</li>
     <li><b>Same day:</b> ask to be seen today.</li></ul>
+    {f'<div class="exlab" id="livelab">Real calls ({len(live)})</div><div class="exlist" id="livelist" role="group" aria-labelledby="livelab"></div>' if live else '<div id="livelist" hidden></div>'}
     <div class="exlab" id="exlab">Test conversations ({s["passed"]} of {s["total"]} did their job)</div>
     <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
   </div>
@@ -559,6 +598,7 @@ def main() -> None:
     ap.add_argument("--before", default="")
     ap.add_argument("--runs-dir", default=str(ROOT / "calls" / "runs"))
     ap.add_argument("--out", default=str(ROOT / "docs" / "index.html"))
+    ap.add_argument("--live-dir", default=str(ROOT / "calls" / "live"))
     args = ap.parse_args()
     cases = {c["id"]: c for c in yaml.safe_load((ROOT / "calls" / "cases.yml").read_text())}
     runs = Path(args.runs_dir)
@@ -570,7 +610,8 @@ def main() -> None:
     cfg = json.loads(cfg_path.read_text()) if cfg_path.exists() else {}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(page(calls, cfg, before, changes_section(ROOT / "calls" / "CHANGES.yml")))
+    live = load_live(Path(args.live_dir))
+    out.write_text(page(calls, cfg, before, changes_section(ROOT / "calls" / "CHANGES.yml"), live))
     print(f"wrote {out}")
 
 
