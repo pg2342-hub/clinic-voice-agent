@@ -300,6 +300,7 @@ CSS = r"""
 .callv{border:1px solid var(--rule);border-radius:16px;background:#fff;box-shadow:0 24px 48px -32px rgb(27 26 23/.35);min-width:0;overflow:hidden}
 .chead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 20px;padding:22px 26px 16px;border-bottom:1px solid var(--rule)}
 .chead>div{min-width:0}
+.chead h2{text-wrap:balance}
 .callv h2{font:400 26px/1.15 var(--serif)}
 .csub{font:12.5px/1.5 var(--mono);color:var(--ink-2);margin-top:6px}
 .badge{display:inline-flex;align-items:center;min-height:30px;padding:0 14px;border-radius:999px;font:500 12.5px/1 var(--mono);letter-spacing:.04em;white-space:nowrap}
@@ -320,7 +321,7 @@ CSS = r"""
 .turn b{font-weight:500}
 .turn.agent b{color:var(--green)}
 .turn.tool{font:12.5px/1.5 var(--mono);color:var(--ink-2)}
-.turn.tool code{color:var(--ink);font-weight:500}
+.turn.tool code{color:var(--ink);font-weight:500;font-size:inherit}
 .turn.tool.change code::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ink);margin-right:6px;vertical-align:0}
 .turn .res{display:block;overflow-wrap:anywhere}
 .out{margin:14px 0 0;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:#fbfaf6}
